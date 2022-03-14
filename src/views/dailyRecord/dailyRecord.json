@@ -1,0 +1,16 @@
+{
+  "_index" : "kunpeng",
+  "_type" : "_doc",
+  "_id" : "oZY3aX8BipS6Z-_xD5bg",
+  "_score" : 1.0,
+  "_source" : {
+  "date" : "2022-03-08T11:08:10.374",
+  "file" : "LocalConfigInfoProcessor.java",
+  "method" : "<clinit>",
+  "level" : "ERROR",
+  "line" : 212,
+  "thread" : "main",
+  "message" : "LOCAL_SNAPSHOT_PATH:/Users/lihuangkai/nacos/config",
+  "class" : "com.alibaba.nacos.client.config.impl.LocalConfigInfoProcessor"
+  }
+  }
