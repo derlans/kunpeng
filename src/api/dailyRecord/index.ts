@@ -6,6 +6,7 @@ interface dailyRecordQuery {
   toDateTime?: number;
   message?: string;
   level?: string;
+  index?: string;
 }
 /**
  * @description 获取日志列表
@@ -19,12 +20,12 @@ export function getDailyRecordList(params: dailyRecordQuery) {
 }
 
 /**
- * 
+ *
  * @description 获取服务列表
  */
-export function getServiceNames(){
+export function getServiceNames() {
   return http.request({
-    url:'/kafka/service/name/list',
-    method:'GET'
-  })
+    url: '/kafka/service/name/list',
+    method: 'GET',
+  });
 }

@@ -10,7 +10,7 @@ export const renderLevelTag = (level) => {
   const LevelOpation = levelOpations.find((LevelOpation) => LevelOpation.value === level);
   const type = LevelOpation?.meta.tagType || 'default';
   const label = LevelOpation?.label;
-  return h(NTag, { type }, label);
+  return h(NTag, { type }, { default: () => label });
 };
 export const columns: dailyRecordColumn[] = [
   {
@@ -36,7 +36,7 @@ export const columns: dailyRecordColumn[] = [
     title: '文件',
     key: 'sourceAsMap[file]',
     render(row) {
-      return h('span', row.sourceAsMap.file);
+      return h('span', null, { default: () => row.sourceAsMap.file });
     },
   },
   {
@@ -46,7 +46,7 @@ export const columns: dailyRecordColumn[] = [
 
     width: 400,
     render(row) {
-      return h('span', row.sourceAsMap.class);
+      return h('span', null, { default: () => row.sourceAsMap.class });
     },
   },
   {
@@ -54,7 +54,7 @@ export const columns: dailyRecordColumn[] = [
     key: 'sourceAsMap[thread]',
     width: 80,
     render(row) {
-      return h('span', row.sourceAsMap.thread);
+      return h('span', null, { default: () => row.sourceAsMap.thread });
     },
   },
   {
@@ -64,14 +64,13 @@ export const columns: dailyRecordColumn[] = [
 
     width: 400,
     render(row) {
-      return h('span', row.sourceAsMap.message);
+      return h('span', null, { default: () => row.sourceAsMap.message });
     },
   },
   {
     title: '等级',
     key: 'sourceAsMap[level]',
     align: 'center',
-
     render(row) {
       return renderLevelTag(row.sourceAsMap.level);
     },

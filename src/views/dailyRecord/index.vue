@@ -1,14 +1,14 @@
 <template>
   <n-card :bordered="false" class="proCard">
-    <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
+    <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset" :key="formKey">
       <template #statusSlot="{ model, field }">
         <n-input v-model:value="model[field]" />
       </template>
     </BasicForm>
     <BasicTable
-      :columns="columns"  
+      :columns="columns"
       :request="loadDataTable"
-      :row-key="(row) => row._id" 
+      :row-key="(row) => row.id"
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
@@ -19,7 +19,6 @@
       </template>
     </BasicTable>
   </n-card>
-
 </template>
 
 <script lang="ts" setup>
@@ -27,15 +26,31 @@
   import { useMessage } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
-  import { getDailyRecordList ,getServiceNames} from '@/api/dailyRecord/index';
+  import { getDailyRecordList, getServiceNames } from '@/api/dailyRecord/index';
   import { columns } from './columns';
   import { levelOpations } from './index';
   // import { useRouter } from 'vue-router';
   // import {  dailyRecord } from './index';
   // import dailyRecordData from './dailyRecord.json';
   const message = useMessage();
+  const formKey = ref(0);
   const actionRef = ref();
-      const schemas =  [  
+  const indexNSelect: {
+    field: string;
+    component: string;
+    label: string;
+    componentProps: {
+      options: any[];
+    };
+  } = {
+    field: 'index',
+    component: 'NSelect',
+    label: '微服务名称',
+    componentProps: {
+      options: [],
+    },
+  };
+  const schemas = [
     {
       filed: 'message',
       component: 'NInput',
@@ -46,17 +61,10 @@
       component: 'NInput',
       label: 'id',
       componentProps: {
-        placeholder: '日志的id'
+        placeholder: '日志的id',
       },
     },
-    {
-      field: 'index',
-      component: 'NSelect',
-      label: '微服务名称',
-      componentProps:{
-        options:[]
-      }
-    },
+    indexNSelect,
     {
       field: 'level',
       component: 'NSelect',
@@ -74,24 +82,31 @@
         type: 'datetimerange',
       },
     },
-  ];     
-  let [register, formMethods] = useForm({
+  ];
+  const [register, formMethods] = useForm({
     gridProps: { cols: '1 s:1 m:2 l:3 xl:4 2xl:4' },
     labelWidth: 80,
     schemas: schemas as any[],
-  }) 
-  getServiceNames().then((res:any[])=>{ 
-    const data:any[]=res || [] 
-    const serviceNamesOpations:any[] = data.map((value)=>{ 
-      const service=value.split(':');
-        return { 
-        label:service[0],
-        value:service[1] 
-        }     
-  }) 
-  register(formMethods)  
-  })
+  });
+  getServiceNames().then(async (res: any[]) => {
+    const data: any[] = res || [];
+    const serviceNamesOpations: any[] = data.map((value) => {
+      const service = value.split(':');
+      return {
+        label: service[0],
+        value: service[1],
+      };
+    });
 
+    indexNSelect.componentProps.options = serviceNamesOpations;
+    await formMethods.setProps({
+      gridProps: { cols: '1 s:1 m:2 l:3 xl:4 2xl:4' },
+      labelWidth: 80,
+      schemas: schemas as any[],
+    });
+    // 强制组件重写渲染
+    formKey.value++;
+  });
 
   const actionColumn = reactive({
     width: 200,
@@ -117,9 +132,6 @@
     },
   });
   const loadDataTable = async ({ page, size }) => {
-  
-    console.log('请求数据');
-    
     const searchQuery = formMethods.getFieldsValue();
     const timeRange = searchQuery.timeRange;
     if (timeRange) {
@@ -175,8 +187,6 @@
   function handleReset(values: Recordable) {
     console.log(values);
   }
-
-
 </script>
 
 <style lang="less" scoped></style>

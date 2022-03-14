@@ -12,7 +12,7 @@ export const levelOpations: SelectOption[] = [
     value: 'TRACE',
     meta: {
       tagType: 'primary',
-    },  
+    },
   },
   {
     label: 'DEBUG',

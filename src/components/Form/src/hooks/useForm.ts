@@ -10,7 +10,6 @@ type Props = Partial<DynamicProps<FormProps>>;
 export function useForm(props?: Props): UseFormReturnType {
   const formRef = ref<Nullable<FormActionType>>(null);
   const loadedRef = ref<Nullable<boolean>>(false);
-
   async function getForm() {
     const form = unref(formRef);
     if (!form) {

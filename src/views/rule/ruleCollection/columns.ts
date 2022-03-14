@@ -10,7 +10,7 @@ interface ruleColumn extends BasicColumn {
 export const rulecolumns: ruleColumn[] = [
   {
     title: 'id',
-    key: 'id', 
+    key: 'id',
   },
   {
     title: '规则名',
