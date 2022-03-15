@@ -34,7 +34,7 @@ export function useDataSource(
           return 'key';
         };
   });
-
+  const { isAutoRequest = true } = unref(propsRef);
   const getDataSourceRef = computed(() => {
     const dataSource = unref(dataSourceRef);
     if (!dataSource || dataSource.length === 0) {
@@ -109,9 +109,10 @@ export function useDataSource(
   }
 
   onMounted(() => {
-    setTimeout(() => {
-      fetch();
-    }, 16);
+    if (isAutoRequest)
+      setTimeout(() => {
+        fetch();
+      }, 16);
   });
 
   function setTableData(values) {

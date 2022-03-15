@@ -11,9 +11,9 @@ interface dailyRecordQuery {
 /**
  * @description 获取日志列表
  */
-export function getDailyRecordList(params: dailyRecordQuery) {
+export function getDailyRecordList(params: dailyRecordQuery, index) {
   return http.request({
-    url: '/kafka/kafka/query/auth-service',
+    url: '/kafka/kafka/query/' + index,
     method: 'GET',
     params,
   });

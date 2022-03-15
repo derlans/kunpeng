@@ -6,6 +6,7 @@
       </template>
     </BasicForm>
     <BasicTable
+      :is-auto-request="false"
       :columns="columns"
       :request="loadDataTable"
       :row-key="(row) => row.id"
@@ -22,7 +23,7 @@
 </template>
 
 <script lang="ts" setup>
-  import { h, reactive, ref } from 'vue';
+  import { h, reactive, ref, nextTick } from 'vue';
   import { useMessage } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
@@ -41,6 +42,7 @@
     label: string;
     componentProps: {
       options: any[];
+      clearable: boolean;
     };
   } = {
     field: 'index',
@@ -48,6 +50,7 @@
     label: '微服务名称',
     componentProps: {
       options: [],
+      clearable: false,
     },
   };
   const schemas = [
@@ -106,6 +109,10 @@
     });
     // 强制组件重写渲染
     formKey.value++;
+    nextTick(async () => {
+      await formMethods.setFieldsValue({ index: serviceNamesOpations[0].value });
+      reloadTable();
+    });
   });
 
   const actionColumn = reactive({
@@ -134,6 +141,8 @@
   const loadDataTable = async ({ page, size }) => {
     const searchQuery = formMethods.getFieldsValue();
     const timeRange = searchQuery.timeRange;
+    const index = searchQuery.index;
+    delete searchQuery.index;
     if (timeRange) {
       searchQuery.fromDateTime = timeRange[0];
       searchQuery.toDateTime = timeRange[1];
@@ -144,7 +153,7 @@
         hits,
         totalHits: { value: totalCount },
       },
-    } = await getDailyRecordList({ page, size, ...searchQuery });
+    } = await getDailyRecordList({ page, size, ...searchQuery }, index);
     if (totalCount) {
       return {
         list: hits,
