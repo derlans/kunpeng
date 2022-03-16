@@ -36,8 +36,9 @@ export interface rule {
 export enum RuleFormMode {
   CREATE_NEW_RULE = 'CREATE_NEW_RULE',
   UPDATE_RULE = 'UPDATE_RULE',
-  LOOK_RULE = 'UPDATE_RULE',
+  LOOK_RULE = 'LOOK_RULE',
 }
+export type RuleFormModeValues = keyof typeof RuleFormMode;
 export const DEFAUTT_JAVA_CODE = `package lhk.life.kunpeng.core;
 
 

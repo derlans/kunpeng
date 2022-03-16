@@ -25,7 +25,15 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean, prodMock) 
       resolvers: [NaiveUiResolver()],
     }),
     // monacoEditor vite环境打包插件
-    monacoEditorPlugin(),
+    monacoEditorPlugin({
+      // languageWorkers: ['editorWorkerService'],
+      // customWorkers: [
+      //   {
+      //     label: 'java',
+      //     entry: 'monaco-editor/esm/vs/language/java/java.worker',
+      //   },
+      // ],
+    }),
   ];
 
   // vite-plugin-html
