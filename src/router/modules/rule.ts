@@ -27,6 +27,14 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [
       {
+        path: 'ruleEditor',
+        name: 'RuleEditor',
+        meta: {
+          title: '规则表单',
+        },
+        component: () => import('@/views/rule/rules/form.vue'),
+      },
+      {
         path: 'rule-list',
         name: 'rule-list',
         meta: {

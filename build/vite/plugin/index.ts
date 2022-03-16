@@ -1,6 +1,7 @@
 import type { Plugin } from 'vite';
 import Components from 'unplugin-vue-components/vite';
 import { NaiveUiResolver } from 'unplugin-vue-components/resolvers';
+import monacoEditorPlugin from 'vite-plugin-monaco-editor';
 
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
@@ -23,6 +24,8 @@ export function createVitePlugins(viteEnv: ViteEnv, isBuild: boolean, prodMock) 
       dts: true,
       resolvers: [NaiveUiResolver()],
     }),
+    // monacoEditor vite环境打包插件
+    monacoEditorPlugin(),
   ];
 
   // vite-plugin-html
