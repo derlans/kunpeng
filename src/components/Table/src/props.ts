@@ -50,6 +50,6 @@ export const basicProps = {
   resizeHeightOffset: propTypes.number.def(0),
   isAutoRequest: {
     type: Boolean,
-    default: false,
+    default: true,
   },
 };

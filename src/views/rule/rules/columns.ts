@@ -13,7 +13,7 @@ export const columns: ruleColumn[] = [
   },
   {
     title: '规则名',
-    key: 'rule_name',
+    key: 'ruleName',
   },
   {
     title: '描述',
@@ -21,16 +21,16 @@ export const columns: ruleColumn[] = [
   },
   {
     title: '创建时间',
-    key: 'create_time',
+    key: 'createTime',
     render(row) {
-      return renderDateTime(row.create_time);
+      return renderDateTime(row.createTime);
     },
   },
   {
     title: '更新时间',
-    key: 'update_time',
+    key: 'updateTime',
     render(row) {
-      return renderDateTime(row.update_time);
+      return renderDateTime(row.updateTime);
     },
   },
   {
@@ -43,9 +43,9 @@ export const columns: ruleColumn[] = [
   },
   {
     title: '是否删除',
-    key: 'is_deleted',
+    key: 'isDeleted',
     render(row) {
-      return h('span', null, row.is_deleted ? '是' : '否');
+      return h('span', null, row.isDeleted ? '是' : '否');
     },
   },
   {

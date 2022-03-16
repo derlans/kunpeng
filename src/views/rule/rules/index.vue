@@ -7,7 +7,7 @@
       ref="actionRef"
       :actionColumn="actionColumn"
       @update:checked-row-keys="onCheckedRow"
-      :scroll-x="1090"
+      :scroll-x="1800"
     >
       <template #toolbar>
         <n-button type="primary" @click="reloadTable">刷新数据</n-button>
@@ -22,17 +22,16 @@
   import { BasicTable, TableAction } from '@/components/Table';
   import { getRuleList } from '@/api/rule/index';
   import { columns } from './columns';
-  // import { useRouter } from 'vue-router';
-  // import {  dailyRecord } from './index';
-  // import dailyRecordData from './dailyRecord.json';
-
-  // const router = useRouter();
+  import { useRouter } from 'vue-router';
+  import { RuleFormMode } from './index';
+  const router = useRouter();
   const message = useMessage();
   const actionRef = ref();
   const actionColumn = reactive({
-    width: 100,
+    width: 200,
     title: '操作',
     key: 'action',
+    align: 'center',
     fixed: 'right',
     render(record) {
       return h(TableAction as any, {
@@ -40,22 +39,26 @@
         actions: [
           {
             label: '删除',
-            icon: 'ic:outline-delete-outline',
             onClick: handleDelete.bind(null, record),
           },
+          {
+            label: '查看详情',
+            type: 'success',
+            onClick: handleLookDetail.bind(null, record),
+          },
         ],
-      });  
-    }, 
-  }); 
- 
+      });
+    },
+  });
+
   const loadDataTable = async ({ page, size }) => {
     const list: any[] = await getRuleList();
     const totalCount = list.length;
     if (totalCount) {
       return {
-        list: list.slice(page * (size - 1), page * size),
+        list: list.slice(size * (page - 1), size * page),
         page,
-        pageCount: parseInt(totalCount / size),
+        pageCount: Math.ceil(totalCount / size),
         size,
       };
     }
@@ -78,6 +81,12 @@
     console.log('点击了删除', record);
 
     message.info('点击了删除');
+  }
+  function handleLookDetail(record: Recordable) {
+    router.push({
+      path: '/rule/ruleEditor',
+      query: { modeValue: RuleFormMode.UPDATE_RULE, id: record.id },
+    });
   }
 </script>
 

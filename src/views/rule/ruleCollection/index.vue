@@ -77,7 +77,7 @@
   window['formMethods'] = formMethods;
   const loadDataTable = async ({ page, size }) => {
     const { name = '', pathName = '' } = formMethods.getFieldsValue();
-    const { records, total: totalCount } = await getRuleCollection({ page, size, name, pathName }); 
+    const { records, total: totalCount } = await getRuleCollection({ page, size, name, pathName });
     if (totalCount) {
       return {
         list: records,

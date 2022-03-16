@@ -1,7 +1,8 @@
 import { http } from '@/utils/http/axios';
+import { rule } from '@/views/rule/rules/index';
 //获取日志列表
 export function getRuleList() {
-  return http.request({
+  return http.request<rule[]>({
     url: '/kunpeng/rule/list',
     method: 'GET',
   });

@@ -22,16 +22,31 @@ export const actionOpations: SelectOption[] = [
 export interface rule {
   [key: string]: number | string | undefined;
   id: number;
-  rule_name: string;
+  ruleName: string;
   description?: string;
-  create_time: string | number;
-  update_time: string | number;
+  createTime: string | number;
+  updateTime: string | number;
   operator: string;
   priority: number;
-  is_deleted: number;
+  isDeleted: number;
   version: number;
   code: string;
 }
+
+export enum RuleFormMode {
+  CREATE_NEW_RULE = 'CREATE_NEW_RULE',
+  UPDATE_RULE = 'UPDATE_RULE',
+  LOOK_RULE = 'LOOK_RULE',
+}
+export type RuleFormModeValues = keyof typeof RuleFormMode;
+export const DEFAUTT_JAVA_CODE = `package lhk.life.kunpeng.core;
+
+
+import lhk.life.kunpeng.entity.BaseRule;
+import org.jeasy.rules.annotation.Action;
+import org.jeasy.rules.annotation.Condition; 
+import org.jeasy.rules.annotation.Fact;
+import org.jeasy.rules.annotation.Rule;`;
 // interface InternalRowData {
 //   // [key: string]: unknown;
 //   key: unknown;
