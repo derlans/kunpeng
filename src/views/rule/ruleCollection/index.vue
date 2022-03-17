@@ -1,6 +1,6 @@
 <template>
   <n-card :bordered="false" class="proCard">
-    <BasicForm @register="register" @submit="handleSubmit" @reset="handleReset">
+    <BasicForm @register="register" @submit="handleSubmit">
       <template #statusSlot="{ model, field }">
         <n-input v-model:value="model[field]" />
       </template>
@@ -16,23 +16,77 @@
       :scroll-x="1090"
     >
       <template #toolbar>
-        <n-button type="primary" @click="reloadTable">刷新数据</n-button>
+        <n-button type="primary" @click="reloadTable" class="mr-3">刷新数据</n-button>
+        <n-button type="success" @click="() => (showModal = true)">创建规则集</n-button>
       </template>
     </BasicTable>
+    <n-modal v-model:show="showModal" :show-icon="false" preset="dialog" title="新建">
+      <n-form
+        :model="formParams"
+        :rules="formParamsRules"
+        ref="formRef"
+        label-placement="left"
+        :label-width="80"
+        class="py-4"
+      >
+        <n-form-item label="名称" path="name">
+          <n-input placeholder="请输入名称" v-model:value="formParams.name" />
+        </n-form-item>
+        <n-form-item label="路径" path="pathName">
+          <n-input v-model:value="formParams.pathName" />
+        </n-form-item>
+        <n-form-item label="描述" path="description">
+          <n-input v-model:value="formParams.description" />
+        </n-form-item>
+      </n-form>
+
+      <template #action>
+        <n-space>
+          <n-button @click="() => (showModal = false)">取消</n-button>
+          <n-button type="info" @click="handelCreateRuleCollection">确定</n-button>
+        </n-space>
+      </template>
+    </n-modal>
   </n-card>
 </template>
 
 <script lang="ts" setup>
   import { h, reactive, ref } from 'vue';
-  import { useMessage } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
-  import { getRuleCollection } from '@/api/rule/index';
+  import { getRuleCollection, removeRuleCollection, createRuleCollection } from '@/api/rule/index';
   import { columns } from './columns';
-  // import { useRouter } from 'vue-router';
-  // import {  dailyRecord } from './index';
-  // import dailyRecordData from './dailyRecord.json';
-
+  const $message = window['$message'];
+  // 新建规则集
+  const showModal = ref(false);
+  const formParams = reactive({
+    description: '',
+    pathName: '',
+    name: '',
+  });
+  const formParamsRules = {
+    name: {
+      required: true,
+      trigger: ['blur', 'input'],
+      message: '请输入名称',
+    },
+    description: {
+      required: false,
+      trigger: ['blur', 'input'],
+    },
+    pathName: {
+      required: true,
+      trigger: ['blur', 'change'],
+      message: '请输入路径',
+    },
+  };
+  function handelCreateRuleCollection() {
+    createRuleCollection({ ...formParams }).then(() => {
+      showModal.value = false;
+      $message.success('创建成功');
+      reloadTable();
+    });
+  }
   const schemas = [
     {
       field: 'pathName',
@@ -45,11 +99,8 @@
       label: '规则名',
     },
   ];
-
-  // const router = useRouter();
-  const message = useMessage();
+  // 规则集列表
   const actionRef = ref();
-
   const actionColumn = reactive({
     width: 100,
     title: '操作',
@@ -74,7 +125,6 @@
     labelWidth: 80,
     schemas: schemas as any[],
   });
-  window['formMethods'] = formMethods;
   const loadDataTable = async ({ page, size }) => {
     const { name = '', pathName = '' } = formMethods.getFieldsValue();
     const { records, total: totalCount } = await getRuleCollection({ page, size, name, pathName });
@@ -100,18 +150,26 @@
   function reloadTable() {
     actionRef.value.reload();
   }
-
-  function handleDelete(record: Recordable) {
-    console.log('点击了删除', record);
-
-    message.info('点击了删除');
-  }
-
   async function handleSubmit() {
     reloadTable();
   }
-
-  function handleReset(values: Recordable) {
-    console.log(values);
+  // 删除规则集合
+  function handleDelete(record: Recordable) {
+    const $dialog = window['$dialog'];
+    const $message = window['$message'];
+    $dialog.warning({
+      title: '警告',
+      content: '你确定删除该规则集？',
+      positiveText: '确定',
+      negativeText: '不确定',
+      onPositiveClick: () => {
+        removeRuleCollection(record.id)
+          .then(() => {
+            $message.success('删除成功');
+            reloadTable();
+          })
+          .catch(() => {});
+      },
+    });
   }
 </script>

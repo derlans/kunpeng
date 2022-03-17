@@ -15,13 +15,13 @@ export const actionOpations: SelectOption[] = [
 export interface rule {
   [key: string]: number | string | undefined;
   id: number;
-  rule_name: string;
+  ruleName: string;
   description?: string;
-  create_time: string | number;
-  update_time: string | number;
+  createTime: string | number;
+  updateTime: string | number;
   operator: string;
   priority: number;
-  is_deleted: number;
+  isDeleted: number;
   version: number;
   code: string;
 }

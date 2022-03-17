@@ -33,7 +33,7 @@ const transform: AxiosTransform = {
   transformRequestData: (res: AxiosResponse<Result>, options: RequestOptions) => {
     const {
       isShowMessage = true,
-      isShowErrorMessage,
+      isShowErrorMessage = true,
       isShowSuccessMessage,
       successMessageText,
       errorMessageText,
