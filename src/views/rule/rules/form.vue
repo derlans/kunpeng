@@ -23,14 +23,8 @@
         >
           <n-date-picker v-model:value="form.updateTime" type="datetime" :disabled="true" />
         </n-form-item>
-        <n-form-item label="乐观锁" path="version">
-          <n-input-number v-model:value="form.version" />
-        </n-form-item>
         <n-form-item label="规则优先级" path="priority">
-          <n-input-number v-model:value="form.priority" />
-        </n-form-item>
-        <n-form-item label="是否删除" path="isDeleted">
-          <n-switch v-model:value="form.isDeleted" :checked-value="1" :unchecked-value="0" />
+          <n-slider v-model:value="form.priority" :step="1" :max="100" :min="1" />
         </n-form-item>
         <n-form-item label="代码" path="code">
           <div class="h-96 w-full">
@@ -91,9 +85,7 @@
       updateTime: now,
       ruleName: '',
       description: '',
-      version: 0,
-      priority: 0,
-      isDeleted: 0,
+      priority: 1,
       code: DEFAUTT_JAVA_CODE,
     };
   }
@@ -124,7 +116,7 @@
           return;
         }
         const rules = await getRuleList();
-        const currentRule = rules.find((rule) => rule.id === parseFloat(id as string));
+        const currentRule = rules.find((rule) => rule.id === id);
         if (currentRule) {
           currentRule.createTime = new Date(currentRule.createTime).getTime();
           currentRule.updateTime = new Date(currentRule.updateTime).getTime();
@@ -172,7 +164,7 @@
 </script>
 
 <style scoped>
-  :deep .n-form-item-label {
+  :deep(.n-form-item-label) {
     font-size: medium;
   }
 </style>

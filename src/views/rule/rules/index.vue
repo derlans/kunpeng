@@ -10,7 +10,19 @@
       :scroll-x="1800"
     >
       <template #toolbar>
-        <n-button type="primary" @click="reloadTable">刷新数据</n-button>
+        <n-button type="primary" @click="reloadTable" class="mr-3">刷新数据</n-button>
+        <n-button
+          type="success"
+          @click="
+            () => {
+              router.push({
+                path: '/rule/ruleEditor',
+                query: { modeValue: RuleFormMode.CREATE_NEW_RULE },
+              });
+            }
+          "
+          >新建规则</n-button
+        >
       </template>
     </BasicTable>
   </n-card>
@@ -40,6 +52,7 @@
           {
             label: '删除',
             onClick: handleDelete.bind(null, record),
+            type: 'warning',
           },
           {
             label: '查看详情',

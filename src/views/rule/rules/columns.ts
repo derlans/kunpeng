@@ -1,4 +1,4 @@
-import { h, VNode } from 'vue';
+import { VNode } from 'vue';
 import { renderDateTime } from '@/render/date/index';
 import { rule } from './index';
 import { BasicColumn } from '@/components/Table/index';
@@ -40,16 +40,5 @@ export const columns: ruleColumn[] = [
   {
     title: '规则优先级',
     key: 'priority',
-  },
-  {
-    title: '是否删除',
-    key: 'isDeleted',
-    render(row) {
-      return h('span', null, row.isDeleted ? '是' : '否');
-    },
-  },
-  {
-    title: '乐观锁',
-    key: 'version',
   },
 ];

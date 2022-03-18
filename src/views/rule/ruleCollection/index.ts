@@ -14,7 +14,7 @@ export const actionOpations: SelectOption[] = [
 
 export interface rule {
   [key: string]: number | string | undefined;
-  id: number;
+  id: string;
   ruleName: string;
   description?: string;
   createTime: string | number;
@@ -24,6 +24,7 @@ export interface rule {
   isDeleted: number;
   version: number;
   code: string;
+  off: number;
 }
 // interface InternalRowData {
 //   // [key: string]: unknown;
