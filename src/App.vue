@@ -25,7 +25,9 @@
   import { useRoute } from 'vue-router';
   import { useDesignSettingStore } from '@/store/modules/designSetting';
   import { lighten } from '@/utils/index';
-
+  import { useRoleStore } from '@/store/modules/role';
+  const ruleStore = useRoleStore();
+  ruleStore.setRoles();
   const route = useRoute();
   const useLockscreen = useLockscreenStore();
   const designStore = useDesignSettingStore();

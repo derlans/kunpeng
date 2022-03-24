@@ -213,3 +213,62 @@ export function lighten(color: string, amount: number) {
 export function isUrl(url: string) {
   return /(^http|https:\/\/)/g.test(url);
 }
+
+/**
+ *
+ *  @description 比较两个对象是否相等
+ */
+export function isObjectEquel(obj1: object, obj2: object, keys?: string[]): Boolean {
+  if (obj1 === obj2) {
+    return true;
+  }
+  if (keys) {
+    for (const i of keys) {
+      if (obj1[i] !== obj2) {
+        return false;
+      }
+    }
+    return true;
+  }
+  const obj1keys = Object.keys(obj1);
+  const obj2keys = Object.keys(obj2);
+  if (obj1keys.length !== obj2keys.length) {
+    return false;
+  }
+  const allKeys = new Set([...obj1keys, ...obj2keys]);
+  for (const i of allKeys) {
+    if (obj1[i] !== obj2) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ *
+ *  @description 比较两个数组是否相等
+ */
+export function isArrayEquel(arr1: any[], arr2: any[]): Boolean {
+  if (arr1.length !== arr2.length) {
+    return false;
+  }
+  for (const i in arr1) {
+    if (arr1[i] !== arr2[i]) {
+      return false;
+    }
+  }
+  return true;
+}
+/**
+ *
+ * @description 设置对象值
+ */
+export function setValues(toSet: object, values: object, keys?: string[]): void {
+  if (keys) {
+    for (const i of keys) {
+      toSet[i] = values[i];
+    }
+    return;
+  }
+  Object.assign(toSet, values);
+}
