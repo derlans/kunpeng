@@ -4,10 +4,11 @@ interface Props {
 }
 interface FormSchema {
   field: string;
-  label: string;
+  label?: string;
   defaultValue?: any;
   rules?: object | object[];
 }
+type setModes = 0 | 1;
 export function useForm(props: Props) {
   const { schemas } = props;
   const defaultForm = getDefaultForm(schemas);
@@ -15,7 +16,8 @@ export function useForm(props: Props) {
   const formMethods = {
     getDefaultForm: () => getDefaultForm(schemas),
     getFormValues: () => getFormValues(form),
-    setFieldsValue: (values) => setFieldsValue(form, schemas, values),
+    setFieldsValue: (values, setMode: setModes = 0) =>
+      setFieldsValue(form, schemas, values, setMode),
     resetFieldsValues: () => resetFieldsValues(form, schemas),
   };
   return [form as any, formMethods];
@@ -42,13 +44,20 @@ export function getFormValues(form) {
  *
  * @description 设置表单值
  */
-export function setFieldsValue(form, schemas: FormSchema[], values: object) {
-  const fields = getFields(schemas);
-  Object.keys(values).forEach((key) => {
-    if (fields.includes(key)) {
+export function setFieldsValue(form, schemas: FormSchema[], values: object, setMode: setModes = 0) {
+  if (setMode === 0) {
+    const fields = getFields(schemas);
+    Object.keys(values).forEach((key) => {
+      if (fields.includes(key)) {
+        form[key] = values[key];
+      }
+    });
+  }
+  if (setMode === 1) {
+    Object.keys(values).forEach((key) => {
       form[key] = values[key];
-    }
-  });
+    });
+  }
 }
 
 /**
