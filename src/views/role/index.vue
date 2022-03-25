@@ -8,7 +8,7 @@
     ref="actionRef"
   >
     <template #toolbar>
-      <n-button type="primary" @click="reloadTable">刷新数据</n-button>
+      <n-button type="primary" @click="reloadTable" class="mr-3">刷新数据</n-button>
       <n-button
         type="success"
         @click="
@@ -39,7 +39,7 @@
       <n-form-item label="授权" path="authIds">
         <n-tree-select
           checkable
-          cascade
+          multiple
           :options="allAuthNodeTree"
           @update:value="handleUpdateValue"
           :default-value="form.authIds"
@@ -53,8 +53,10 @@
     <template #action>
       <n-space>
         <n-button @click="() => (showModal = false)">取消</n-button>
-        <n-button type="info" @click="createRole">新建</n-button>
-        <n-button type="success" @click="updateRole">更新</n-button>
+        <n-button type="info" @click="createRole" v-if="currentMode.value === 0">新建</n-button>
+        <n-button type="success" @click="updateRole" v-else-if="currentMode.value === 1"
+          >更新</n-button
+        >
       </n-space>
     </template>
   </n-modal>
@@ -97,7 +99,7 @@
                       reloadTable();
                     })
                     .catch(() => {
-                      $message.success('删除失败');
+                      $message.fail('删除失败');
                     });
                 },
               });
@@ -109,7 +111,7 @@
             type: 'success',
             onClick: () => {
               currentMode.value = modes[1];
-              formMethods(record, 1);
+              formMethods.setFieldsValue(record, 1);
               showModal.value = true;
             },
           },
@@ -160,10 +162,10 @@
   function createRole() {}
   async function updateRole() {
     await roleStore.updateRole(form);
-    $message('更新成功');
+    $message.success('更新成功');
   }
   function handleUpdateValue(v) {
-    form.authIds = [...v];
+    form.authIds = v;
   }
   const modes = [
     {

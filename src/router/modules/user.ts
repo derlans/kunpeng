@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { UserSwitchOutlined } from '@vicons/antd';
+import { TeamOutlined } from '@vicons/antd';
 import { renderIcon } from '@/utils/index';
 
 /**
@@ -16,23 +16,23 @@ import { renderIcon } from '@/utils/index';
  * */
 const routes: Array<RouteRecordRaw> = [
   {
-    path: '/role',
-    name: 'Role',
-    redirect: '/role/role-setting',
+    path: '/user',
+    name: 'User',
+    redirect: '/user/user-setting',
     component: Layout,
     meta: {
-      title: '角色',
-      icon: renderIcon(UserSwitchOutlined),
+      title: '用户',
+      icon: renderIcon(TeamOutlined),
       sort: 99,
     },
     children: [
       {
-        path: 'role-setting',
-        name: 'RoleList',
+        path: 'user-setting',
+        name: 'UserList',
         meta: {
-          title: '角色管理',
+          title: '用户管理',
         },
-        component: () => import('@/views/role/index.vue'),
+        component: () => import('@/views/user/index.vue'),
       },
     ],
   },

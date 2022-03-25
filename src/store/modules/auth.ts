@@ -15,6 +15,7 @@ export const useAuthStore = defineStore({
   actions: {
     async setAuth() {
       const allAuthNodeTree = await getAllAuthTree();
+      this.allAuthNodeTree.length = 0;
       this.allAuthNodeTree.push(...allAuthNodeTree);
     },
   },

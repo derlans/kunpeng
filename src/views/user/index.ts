@@ -1,9 +1,8 @@
-// import { renderArray } from '@/render/array';
+import { renderArray } from '@/render/array';
 import { renderDateTime } from '@/render/date';
-import { useRoleStore } from '@/store/modules/role';
-import { DataTableColumns, NAvatar, NSelect } from 'naive-ui';
+import { DataTableColumns, NAvatar } from 'naive-ui';
 import { h } from 'vue';
-const roleStore = useRoleStore();
+import { Role } from '../role';
 export type dataTime = string | number | Date;
 export interface User {
   id: string;
@@ -18,7 +17,7 @@ export interface User {
   lastLogin: dataTime;
   role?: string;
   phone: string;
-  sysRoles: string[];
+  sysRoles: Role[];
 }
 export function createColumns(): DataTableColumns<User> {
   return [
@@ -48,14 +47,7 @@ export function createColumns(): DataTableColumns<User> {
       title: '角色',
       align: 'center',
       render(rowData) {
-        return h(NSelect, {
-          value: rowData.sysRoles,
-          options: rowData.sysRoles.map((roleid) => ({
-            value: roleid,
-            label: roleStore.getRoleMap[roleid].rolename,
-          })),
-        });
-        // return renderArray(rowData.sysRoles.map((roleid) => roleStore.getRoleMap[roleid].rolename));
+        return renderArray(rowData.sysRoles.map((role) => role.rolename));
       },
     },
     {

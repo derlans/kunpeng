@@ -67,13 +67,12 @@
   const schemas = [
     {
       field: 'username',
-      labelMessage: '这是一个提示',
       component: 'NInput',
-      label: '姓名',
+      label: '用户名',
       componentProps: {
-        placeholder: '请输入姓名',
+        placeholder: '请输入用户名',
       },
-      rules: [{ required: true, message: '请输入姓名', trigger: ['blur'] }],
+      rules: [{ required: true, message: '请输入用户名', trigger: ['blur'] }],
     },
   ];
   const [register, formMetheds] = useForm({

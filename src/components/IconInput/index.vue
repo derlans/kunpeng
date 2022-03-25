@@ -31,7 +31,8 @@
 <script setup lang="ts">
   import { ref } from 'vue';
   import * as icons from '@vicons/antd';
-  const filterIcons = Object.entries(icons).filter((icon, index) => !(index % 3));
+  const filterIcons = Object.entries(icons);
+  // const filterIcons = Object.entries(icons).filter((icon, index) => !(index % 3));
   const showModel = ref(false);
   const Props = defineProps<{
     modelValue?: string;

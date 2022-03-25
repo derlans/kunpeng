@@ -26,6 +26,8 @@
   import { useDesignSettingStore } from '@/store/modules/designSetting';
   import { lighten } from '@/utils/index';
   import { useRoleStore } from '@/store/modules/role';
+  import { useAuthStore } from './store/modules/auth';
+  useAuthStore().setAuth();
   const ruleStore = useRoleStore();
   ruleStore.setRoles();
   const route = useRoute();
