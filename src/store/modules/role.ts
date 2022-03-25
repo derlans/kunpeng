@@ -5,12 +5,21 @@ import { isArrayEquel, isObjectEquel, setValues } from '@/utils';
 interface roleState {
   roles: Role[];
 }
+interface roleMap {
+  [k: Role['id']]: Role;
+}
 export const useRoleStore = defineStore({
   id: 'role',
   state: (): roleState => ({ roles: [] }),
   getters: {
     getRoles(state) {
       return state.roles;
+    },
+    getRoleMap(state): roleMap {
+      return state.roles.reduce((pre, cur) => {
+        pre[cur.id] = cur;
+        return pre;
+      }, {});
     },
   },
   actions: {
