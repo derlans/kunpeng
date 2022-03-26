@@ -57,6 +57,28 @@ export function changePassword(params, uid) {
 }
 
 /**
+ * @description: 用户修改个人信息
+ */
+export function updateUser(params) {
+  return http.request({
+    url: '/auth/user/update',
+    method: 'POST',
+    params,
+  });
+}
+
+/**
+ * @description: 修改密码
+ */
+export function updatePassword(params) {
+  return http.request({
+    url: '/auth/user/update/password',
+    method: 'POST',
+    params,
+  });
+}
+
+/**
  * @description: 用户登出
  */
 export function logout(params) {
@@ -65,4 +87,51 @@ export function logout(params) {
     method: 'POST',
     params,
   });
+}
+
+/**
+ * @description: 注册
+ */
+export function register(data) {
+  return http.request({
+    url: '/auth/user/create',
+    method: 'POST',
+    data,
+  });
+}
+
+/**
+ * @description: 验证邮件
+ */
+export function sendEmail(mail) {
+  return http.request(
+    {
+      url: '/auth/mail/send',
+      method: 'POST',
+      params: {
+        mail,
+      },
+    },
+    {
+      joinParamsToUrl: true,
+    }
+  );
+}
+/**
+ * @description: 验证邮件
+ */
+export function checkEmail(mail, mailCode) {
+  return http.request(
+    {
+      url: '/auth/mail/check',
+      method: 'POST',
+      params: {
+        mail,
+        mailCode,
+      },
+    },
+    {
+      joinParamsToUrl: true,
+    }
+  );
 }

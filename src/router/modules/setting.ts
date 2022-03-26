@@ -1,6 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { SettingOutlined } from '@vicons/antd';
+import { ContactsFilled } from '@vicons/antd';
 import { renderIcon } from '@/utils/index';
 
 /**
@@ -21,8 +21,8 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/setting/account',
     component: Layout,
     meta: {
-      title: '设置页面',
-      icon: renderIcon(SettingOutlined),
+      title: '个人信息',
+      icon: renderIcon(ContactsFilled),
       sort: 5,
     },
     children: [
@@ -33,14 +33,6 @@ const routes: Array<RouteRecordRaw> = [
           title: '个人设置',
         },
         component: () => import('@/views/setting/account/account.vue'),
-      },
-      {
-        path: 'system',
-        name: 'setting-system',
-        meta: {
-          title: '系统设置',
-        },
-        component: () => import('@/views/setting/system/system.vue'),
       },
     ],
   },

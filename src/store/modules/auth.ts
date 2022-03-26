@@ -1,12 +1,12 @@
 import { defineStore } from 'pinia';
 import { getAllAuthTree } from '@/api/auth/index';
 import { AuthNodeTree } from '@/auth/types';
-interface authState {
+interface AuthState {
   allAuthNodeTree: AuthNodeTree;
 }
 export const useAuthStore = defineStore({
   id: 'auth',
-  state: (): authState => ({ allAuthNodeTree: [] }),
+  state: (): AuthState => ({ allAuthNodeTree: [] }),
   getters: {
     getAllAuthNodeTree(state) {
       return state.allAuthNodeTree;
@@ -17,6 +17,7 @@ export const useAuthStore = defineStore({
       const allAuthNodeTree = await getAllAuthTree();
       this.allAuthNodeTree.length = 0;
       this.allAuthNodeTree.push(...allAuthNodeTree);
+      return allAuthNodeTree;
     },
   },
 });

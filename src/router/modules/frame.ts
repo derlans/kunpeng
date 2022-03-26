@@ -12,7 +12,7 @@ const routes: Array<RouteRecordRaw> = [
     redirect: '/frame/docs',
     component: Layout,
     meta: {
-      title: '外部页面',
+      title: '接口管理',
       sort: 8,
       icon: renderIcon(DesktopOutline),
     },
@@ -21,8 +21,8 @@ const routes: Array<RouteRecordRaw> = [
         path: 'docs',
         name: 'frame-docs',
         meta: {
-          title: '项目文档(内嵌)',
-          frameSrc: 'https://naive-ui-admin-docs.vercel.app',
+          title: '接口文档',
+          frameSrc: 'http://lhk.life/auth/doc.html#/home',
         },
         component: IFrame,
       },
@@ -30,8 +30,8 @@ const routes: Array<RouteRecordRaw> = [
         path: 'naive',
         name: 'frame-naive',
         meta: {
-          title: 'NaiveUi(内嵌)',
-          frameSrc: 'https://www.naiveui.com',
+          title: '接口控制',
+          frameSrc: 'http://124.70.101.198:5601/login',
         },
         component: IFrame,
       },

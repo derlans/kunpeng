@@ -59,9 +59,9 @@ export function createRouterGuards(router: Router) {
       return;
     }
 
-    const userInfo = await userStore.GetInfo();
-
-    const routes = await asyncRouteStore.generateRoutes(userInfo);
+    const { authorities } = await userStore.setAuthorities();
+    await userStore.GetInfo();
+    const routes = await asyncRouteStore.generateRoutes({ authorities });
 
     // 动态添加可访问路由表
     routes.forEach((item) => {

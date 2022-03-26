@@ -53,3 +53,38 @@ export function useTime() {
 
   return { month, day, hour, minute, second, week };
 }
+
+/**
+ * @description 倒计时
+ */
+export function useTimeCountdown(second: number, func?: Function) {
+  const time = ref(second);
+  let timer;
+  function updateTime() {
+    time.value--;
+    if (time.value <= 0) {
+      if (func) func();
+    } else {
+      start();
+    }
+  }
+  function start() {
+    timer = setTimeout(() => {
+      updateTime();
+    }, 1000);
+  }
+  function stop() {
+    clearTimeout(timer);
+  }
+  function reset(rSecond?: number, rFunc?: Function) {
+    clearTimeout(timer);
+    time.value = rSecond || second;
+    func = rFunc || func;
+  }
+  return {
+    time,
+    start,
+    stop,
+    reset,
+  };
+}

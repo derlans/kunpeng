@@ -23,9 +23,6 @@
         >
           <n-date-picker v-model:value="form.updateTime" type="datetime" :disabled="true" />
         </n-form-item>
-        <n-form-item label="规则优先级" path="priority">
-          <n-slider v-model:value="form.priority" :step="1" :max="100" :min="1" />
-        </n-form-item>
         <n-form-item label="代码" path="code">
           <div class="h-96 w-full">
             <code-editor v-model:code="form.code" ref="javaCodeEditor" :disabled="disabled" />
@@ -85,7 +82,6 @@
       updateTime: now,
       ruleName: '',
       description: '',
-      priority: 1,
       code: DEFAUTT_JAVA_CODE,
     };
   }

@@ -24,6 +24,7 @@ const routes: Array<RouteRecordRaw> = [
       title: '日志管理',
       icon: renderIcon(TableOutlined),
       sort: 2,
+      permissions: 'dailyRecord',
     },
     children: [
       {
@@ -31,6 +32,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'daily-record-list',
         meta: {
           title: '日志列表',
+          permissions: 'dailyRecord:list',
         },
         component: () => import('@/views/dailyRecord/index.vue'),
       },

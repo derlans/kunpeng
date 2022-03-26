@@ -19,6 +19,7 @@
         <n-card :bordered="false" size="small" :title="typeTitle" class="proCard">
           <BasicSetting v-if="type === 1" />
           <SafetySetting v-if="type === 2" />
+          <PasswordSetting v-if="type === 3" />
         </n-card>
       </n-grid-item>
     </n-grid>
@@ -28,7 +29,7 @@
   import { ref } from 'vue';
   import BasicSetting from './BasicSetting.vue';
   import SafetySetting from './SafetySetting.vue';
-
+  import PasswordSetting from './PasswordSetting.vue';
   const typeTabList = [
     {
       name: '基本设置',
@@ -37,8 +38,13 @@
     },
     {
       name: '安全设置',
-      desc: '密码，邮箱等设置',
+      desc: '邮箱设置',
       key: 2,
+    },
+    {
+      name: '安全设置',
+      desc: '密码设置',
+      key: 3,
     },
   ];
 

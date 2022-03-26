@@ -3,7 +3,8 @@ import { createStorage } from '@/utils/Storage';
 import { store } from '@/store';
 import { ACCESS_TOKEN, CURRENT_USER, IS_LOCKSCREEN } from '@/store/mutation-types';
 import { ResultEnum } from '@/enums/httpEnum';
-
+import { AuthNodeTree, AuthNode } from '@/auth/types';
+import { getAuths } from '@/api/auth';
 const Storage = createStorage({ storage: localStorage });
 import { getUserInfo, login } from '@/api/system/user';
 import { storage } from '@/utils/Storage';
@@ -13,8 +14,10 @@ export interface IUserState {
   username: string;
   welcome: string;
   avatar: string;
-  permissions: any[];
+  emial: string;
   info: any;
+  authNodeTree: AuthNodeTree;
+  authorities: AuthNode['perms'][];
 }
 
 export const useUserStore = defineStore({
@@ -22,31 +25,12 @@ export const useUserStore = defineStore({
   state: (): IUserState => ({
     token: Storage.get(ACCESS_TOKEN, ''),
     username: '',
+    emial: '',
     welcome: '',
     avatar: '',
-    permissions: [
-      {
-        label: '主控台',
-        value: 'dashboard_console',
-      },
-      {
-        label: '监控页',
-        value: 'dashboard_monitor',
-      },
-      {
-        label: '工作台',
-        value: 'dashboard_workplace',
-      },
-      {
-        label: '基础列表',
-        value: 'basic_list',
-      },
-      {
-        label: '基础列表删除',
-        value: 'basic_list_delete',
-      },
-    ],
     info: Storage.get(CURRENT_USER, {}),
+    authNodeTree: [],
+    authorities: [],
   }),
   getters: {
     getToken(): string {
@@ -58,8 +42,8 @@ export const useUserStore = defineStore({
     getNickname(): string {
       return this.username;
     },
-    getPermissions(): [any][] {
-      return this.permissions;
+    getAuthorities(): AuthNode['perms'][] {
+      return this.authorities;
     },
     getUserInfo(): object {
       return this.info;
@@ -71,9 +55,6 @@ export const useUserStore = defineStore({
     },
     setAvatar(avatar: string) {
       this.avatar = avatar;
-    },
-    setPermissions(permissions) {
-      this.permissions = permissions;
     },
     setUserInfo(info) {
       this.info = info;
@@ -106,14 +87,8 @@ export const useUserStore = defineStore({
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then((res) => {
-            // if (result.permissions && result.permissions.length) {
-            //   const permissionsList = result.permissions;
-            //   that.setPermissions(permissionsList);
-            //   that.setUserInfo(result);
-            // } else {
-            //   reject(new Error('getInfo: permissionsList must be a non-null array !'));
-            // }
             this.setAvatar(res.avatar);
+            this.emial = res.email;
             resolve(res);
           })
           .catch((error) => {
@@ -121,10 +96,20 @@ export const useUserStore = defineStore({
           });
       });
     },
-
+    // 获取权限
+    async setAuthorities() {
+      try {
+        const { nav, authorities } = await getAuths();
+        this.authNodeTree = nav;
+        this.authorities = authorities;
+        return { authorities };
+      } catch (e) {
+        return Promise.reject(e);
+      }
+    },
     // 登出
     async logout() {
-      this.setPermissions([]);
+      this.authorities = [];
       this.setUserInfo('');
       storage.remove(ACCESS_TOKEN);
       storage.remove(CURRENT_USER);

@@ -73,7 +73,7 @@
           </n-form-item>
           <n-form-item>
             <n-button type="primary" @click="handleSubmit" size="large" :loading="loading" block>
-              登录
+              注册
             </n-button>
           </n-form-item>
           <n-form-item class="default-color">
@@ -91,11 +91,10 @@
 
 <script lang="ts" setup>
   import { reactive, ref } from 'vue';
-  import { useRoute, useRouter } from 'vue-router';
-  import { useUserStore } from '@/store/modules/user';
+  import { useRouter } from 'vue-router';
   import { useMessage } from 'naive-ui';
   import { ResultEnum } from '@/enums/httpEnum';
-  import { PageEnum } from '@/enums/pageEnum';
+  import { register } from '@/api/system/user';
   interface FormState {
     username: string;
     password: string;
@@ -107,7 +106,6 @@
   const formRef = ref();
   const message = useMessage();
   const loading = ref(false);
-  const LOGIN_NAME = PageEnum.BASE_LOGIN_NAME;
 
   const formInline = reactive({
     username: '',
@@ -122,17 +120,13 @@
     password: { required: true, message: '请输入密码', trigger: 'blur' },
   };
 
-  const userStore = useUserStore();
-
   const router = useRouter();
-  const route = useRoute();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     formRef.value.validate(async (errors) => {
       if (!errors) {
         const { username, password, email, phone, city } = formInline;
-        message.loading('登录中...');
         loading.value = true;
 
         const params: FormState = {
@@ -144,16 +138,11 @@
         };
 
         try {
-          const { code, message: msg } = await userStore.login(params);
-          message.destroyAll();
+          const { code, message: msg } = await register(params);
           if (code == ResultEnum.SUCCESS) {
-            const toPath = decodeURIComponent((route.query?.redirect || '/') as string);
-            message.success('登录成功，即将进入系统');
-            if (route.name === LOGIN_NAME) {
-              router.replace('/');
-            } else router.replace(toPath);
+            router.replace({ path: '/login' });
           } else {
-            message.info(msg || '登录失败');
+            message.info(msg || '注册失败');
           }
         } finally {
           loading.value = false;
