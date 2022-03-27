@@ -16,6 +16,9 @@
       <n-button type="primary" @click="reloadTable">刷新数据</n-button>
     </template>
   </BasicTable>
+  <NModal v-model:show="showBlackList">
+    <BlackList :userid="currentUserid" />
+  </NModal>
 </template>
 
 <script setup lang="ts">
@@ -24,6 +27,7 @@
   import { BasicForm, useForm } from '@/components/Form/index';
   import { reactive, h, ref } from 'vue';
   import { getUserList } from '@/api/user/index';
+  import BlackList from '@/components/blacklist/index.vue';
   const actionRef = ref();
   const actionColumn = reactive({
     width: 200,
@@ -31,7 +35,7 @@
     key: 'action',
     align: 'center',
     fixed: 'right',
-    render() {
+    render(record) {
       return h(TableAction as any, {
         style: 'button',
         actions: [
@@ -39,6 +43,14 @@
             label: '授予角色',
             type: 'success',
             onClick: () => {},
+          },
+          {
+            label: '黑名单编辑',
+            type: 'info',
+            onClick: () => {
+              showBlackList.value = true;
+              currentUserid.value = record.id;
+            },
           },
         ],
       });
@@ -80,4 +92,6 @@
     labelWidth: 80,
     schemas: schemas as any[],
   });
+  const showBlackList = ref(false);
+  const currentUserid = ref('');
 </script>
