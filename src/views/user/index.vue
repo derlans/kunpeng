@@ -19,15 +19,20 @@
   <NModal v-model:show="showBlackList">
     <BlackList :userid="currentUserid" />
   </NModal>
+  <NModal v-model:show="showSetRole">
+    <SetRoleVue :user="currentUser" @update:sys-roles="handelUpdateUserRole" />
+  </NModal>
 </template>
 
 <script setup lang="ts">
   import { columns } from './index';
+  import { User } from './index';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
   import { reactive, h, ref } from 'vue';
   import { getUserList } from '@/api/user/index';
   import BlackList from '@/components/blacklist/index.vue';
+  import SetRoleVue from './SetRole.vue';
   const actionRef = ref();
   const actionColumn = reactive({
     width: 200,
@@ -42,7 +47,11 @@
           {
             label: '授予角色',
             type: 'success',
-            onClick: () => {},
+            onClick: () => {
+              // Object.assign(currentUser, record);
+              currentUser.value = record;
+              showSetRole.value = true;
+            },
           },
           {
             label: '黑名单编辑',
@@ -59,6 +68,7 @@
   async function loadDataTable({ size, page }) {
     const { username = '' } = formMetheds.getFieldsValue();
     const { records, total, current } = await getUserList({ current: page, size, username });
+    window['users'] = records;
     if (total) {
       return {
         list: records,
@@ -94,4 +104,9 @@
   });
   const showBlackList = ref(false);
   const currentUserid = ref('');
+  const showSetRole = ref(false);
+  let currentUser = ref({} as User);
+  function handelUpdateUserRole(v) {
+    currentUser.value.sysRoles = v;
+  }
 </script>

@@ -15,6 +15,12 @@ export const useRoleStore = defineStore({
     getRoles(state) {
       return state.roles;
     },
+    getRoleOptions(state) {
+      return state.roles.map((role) => ({
+        value: role.id,
+        label: role.rolename,
+      }));
+    },
     getRoleMap(state): roleMap {
       return state.roles.reduce((pre, cur) => {
         pre[cur.id] = cur;
