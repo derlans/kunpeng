@@ -24,6 +24,7 @@ const routes: Array<RouteRecordRaw> = [
       title: '规则管理',
       icon: renderIcon(TableOutlined),
       sort: 2,
+      permissions: 'rule',
     },
     children: [
       {
@@ -31,6 +32,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'RuleEditor',
         meta: {
           title: '规则表单',
+          permissions: 'rule:form',
         },
         component: () => import('@/views/rule/rules/form.vue'),
       },
@@ -39,6 +41,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'rule-list',
         meta: {
           title: '规则列表',
+          permissions: 'rule:list',
         },
         component: () => import('@/views/rule/rules/index.vue'),
       },
@@ -47,18 +50,9 @@ const routes: Array<RouteRecordRaw> = [
         name: 'rule-collection-list',
         meta: {
           title: '规则集列表',
+          permissions: 'ruleCollection',
         },
         component: () => import('@/views/rule/ruleCollection/index.vue'),
-      },
-      {
-        path: 'basic-info/:id?',
-        name: 'basic-info',
-        meta: {
-          title: '基础详情',
-          hidden: true,
-          activeMenu: 'basic-list',
-        },
-        component: () => import('@/views/list/basicList/info.vue'),
       },
     ],
   },

@@ -1,7 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { DashboardOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
 
 const routeName = 'dashboard';
 
@@ -23,8 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: 'Dashboard',
-      icon: renderIcon(DashboardOutlined),
-      permissions: ['dashboard_console', 'dashboard_console', 'dashboard_workplace'],
+      permissions: 'dashboard_console',
       sort: 0,
     },
     children: [
@@ -33,7 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         name: `${routeName}_console`,
         meta: {
           title: '主控台',
-          permissions: ['dashboard_console'],
+          permissions: 'dashboard_console',
         },
         component: () => import('@/views/dashboard/console/console.vue'),
       },
@@ -52,7 +49,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           title: '工作台',
           keepAlive: true,
-          permissions: ['dashboard_workplace'],
+          permissions: 'dashboard_workplace',
         },
         component: () => import('@/views/dashboard/workplace/workplace.vue'),
       },

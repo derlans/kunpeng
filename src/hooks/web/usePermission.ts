@@ -4,23 +4,12 @@ export function usePermission() {
   const userStore = useUserStore();
 
   /**
-   * 检查权限
-   * @param accesses
-   */
-  function _somePermissions(accesses: string[]) {
-    return userStore.getPermissions.some((item) => {
-      const { value }: any = item;
-      return accesses.includes(value);
-    });
-  }
-
-  /**
    * 判断是否存在权限
    * 可用于 v-if 显示逻辑
    * */
-  function hasPermission(accesses: string[]): boolean {
-    if (!accesses || !accesses.length) return true;
-    return _somePermissions(accesses);
+  function hasPermission(accesses: string): boolean {
+    if (!accesses) return true;
+    return userStore.getAuthorities.includes(accesses);
   }
 
   /**
@@ -28,7 +17,7 @@ export function usePermission() {
    * @param accesses
    */
   function hasEveryPermission(accesses: string[]): boolean {
-    const permissionsList = userStore.getPermissions;
+    const permissionsList = userStore.getAuthorities;
     if (Array.isArray(accesses)) {
       return permissionsList.every((access: any) => accesses.includes(access.value));
     }
@@ -41,7 +30,7 @@ export function usePermission() {
    * @param accessMap
    */
   function hasSomePermission(accesses: string[]): boolean {
-    const permissionsList = userStore.getPermissions;
+    const permissionsList = userStore.getAuthorities;
     if (Array.isArray(accesses)) {
       return permissionsList.some((access: any) => accesses.includes(access.value));
     }

@@ -1,7 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { UserSwitchOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
 
 /**
  * @param name 路由名称, 必须设置,且不能重名
@@ -22,8 +20,8 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '角色',
-      icon: renderIcon(UserSwitchOutlined),
       sort: 99,
+      permissions: 'role',
     },
     children: [
       {
@@ -31,6 +29,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'RoleList',
         meta: {
           title: '角色管理',
+          permissions: 'role:list',
         },
         component: () => import('@/views/role/index.vue'),
       },

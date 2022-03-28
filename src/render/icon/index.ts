@@ -6,3 +6,7 @@ import * as icons from '@vicons/antd';
 export function renderViconsIcon(icon: string) {
   return h(NIcon, null, { default: () => h(icons[icon]) });
 }
+
+export function getViconsIcon(icon: string) {
+  return () => h(NIcon, null, { default: () => h(icons[icon]) });
+}

@@ -1,7 +1,6 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { ContactsFilled } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
+import { getViconsIcon } from '@/render/icon';
 
 /**
  * @param name 路由名称, 必须设置,且不能重名
@@ -22,7 +21,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '个人信息',
-      icon: renderIcon(ContactsFilled),
+      icon: getViconsIcon('DashboardOutlined'),
       sort: 5,
     },
     children: [

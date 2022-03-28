@@ -28,7 +28,7 @@
         :default-value="parentNode?.id"
         label-field="name"
         key-field="id"
-        :key="1"
+        :key="treeSelectKey"
       />
     </n-form-item>
     <n-form-item path="name" label="排序号">
@@ -38,8 +38,10 @@
       <icon-input v-model="form.icon" />
     </n-form-item>
     <div class="flex justify-end">
-      <n-button type="success" v-if="currentMode.value === 0">创建</n-button>
-      <n-button type="success" v-else-if="currentMode.value === 1">更新</n-button>
+      <n-button type="success" v-if="currentMode.value === 0" @click="createAuth">创建</n-button>
+      <n-button type="success" v-else-if="currentMode.value === 1" @click="updateAuth"
+        >更新</n-button
+      >
     </div>
   </n-form>
 </template>
@@ -99,7 +101,31 @@
     () => {
       parentNode.value = dfs(authNodeTree, form.parentId, 'id', 'children');
       treeSelectKey.value++;
-      console.log(parentNode.value?.name, treeSelectKey.value, 'parentNode');
     }
   );
+  watch(
+    () => form.type,
+    (v) => {
+      if (v === 0) form.parentId = -1;
+    },
+    {
+      immediate: true,
+    }
+  );
+  async function createAuth() {
+    await authStore
+      .createAuth({ ...form })
+      .then(() => {
+        window['$message'].success('成功');
+      })
+      .catch(() => window['$message'].error('失败'));
+  }
+  async function updateAuth() {
+    await authStore
+      .updateAuth({ ...form })
+      .then(() => {
+        window['$message'].success('成功');
+      })
+      .catch(() => window['$message'].error('失败'));
+  }
 </script>

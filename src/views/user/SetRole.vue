@@ -4,7 +4,6 @@
       <n-form-item label="角色">
         <n-select
           :value="sysRoleids"
-          multiple
           :options="roleStore.getRoleOptions"
           @update:value="handelUpdate"
         />
@@ -26,7 +25,7 @@
     user: User;
   }>();
 
-  const sysRoleids = ref(Props.user.sysRoles.map((role) => role.id));
+  const sysRoleids = ref(Props.user.sysRoles.map((role) => role.id)[0]);
   const Emit = defineEmits<{
     (e: 'update:sysRoles', user: User['sysRoles']): void;
   }>();
@@ -35,7 +34,7 @@
   }
   async function updateRoles() {
     try {
-      await setUserRoles(Props.user.id, sysRoleids.value);
+      await setUserRoles(Props.user.id, [sysRoleids.value]);
       Emit(
         'update:sysRoles',
         roleStore.roles.filter((role) => sysRoleids.value.includes(role.id))

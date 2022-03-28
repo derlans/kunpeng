@@ -1,7 +1,5 @@
 import { RouteRecordRaw } from 'vue-router';
 import { Layout } from '@/router/constant';
-import { TableOutlined } from '@vicons/antd';
-import { renderIcon } from '@/utils/index';
 
 /**
  * @param name 路由名称, 必须设置,且不能重名
@@ -22,7 +20,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '日志管理',
-      icon: renderIcon(TableOutlined),
       sort: 2,
       permissions: 'dailyRecord',
     },
@@ -35,16 +32,6 @@ const routes: Array<RouteRecordRaw> = [
           permissions: 'dailyRecord:list',
         },
         component: () => import('@/views/dailyRecord/index.vue'),
-      },
-      {
-        path: 'basic-info/:id?',
-        name: 'basic-info',
-        meta: {
-          title: '基础详情',
-          hidden: true,
-          activeMenu: 'basic-list',
-        },
-        component: () => import('@/views/list/basicList/info.vue'),
       },
     ],
   },

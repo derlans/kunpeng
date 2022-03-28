@@ -1,15 +1,20 @@
 <template>
-  <n-card title="卡片">
-    <n-button type="info" class="mb-3" @click="showModel = true">新增</n-button>
+  <n-card title="菜单列表">
+    <n-button
+      type="info"
+      class="mb-3"
+      v-permission="'auth:create'"
+      @click="
+        () => {
+          showModel = true;
+          formMode = 0;
+        }
+      "
+      >新增</n-button
+    >
     <n-data-table :columns="columns" :data="data" :row-key="rowKey" />
   </n-card>
-  <n-modal
-    v-model:show="showModel"
-    :show-icon="false"
-    preset="dialog"
-    title="权限节点"
-    display-directive="show"
-  >
+  <n-modal v-model:show="showModel" :show-icon="false" preset="dialog" title="权限节点">
     <EditAuth v-model="form" :mode="formMode" />
   </n-modal>
 </template>
@@ -85,7 +90,12 @@
             {
               type: 'success',
               onClick: () => {
-                formMethod.setFieldsValue(rowData, 1);
+                authStore
+                  .deleteAuth(rowData.id)
+                  .then(() => {
+                    window['$message'].success('成功');
+                  })
+                  .catch(() => window['$message'].error('失败'));
               },
             },
             '删除'

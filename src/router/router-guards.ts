@@ -9,7 +9,7 @@ import { ErrorPageRoute } from '@/router/base';
 
 const LOGIN_PATH = PageEnum.BASE_LOGIN;
 const REGISTER_PATH = PageEnum.BASE_REGISTER;
-const whitePathList = [LOGIN_PATH]; // no redirect whitelist
+const whitePathList = [LOGIN_PATH, REGISTER_PATH]; // no redirect whitelist
 
 export function createRouterGuards(router: Router) {
   const userStore = useUserStoreWidthOut();
@@ -17,10 +17,6 @@ export function createRouterGuards(router: Router) {
   router.beforeEach(async (to, from, next) => {
     const Loading = window['$loading'] || null;
     Loading && Loading.start();
-    if (to.path === REGISTER_PATH) {
-      next();
-      return;
-    }
     if (from.path === LOGIN_PATH && to.name === 'errorPage') {
       next(PageEnum.BASE_HOME);
       return;
@@ -85,7 +81,7 @@ export function createRouterGuards(router: Router) {
   router.afterEach((to, _, failure) => {
     document.title = (to?.meta?.title as string) || document.title;
     if (isNavigationFailure(failure)) {
-      //console.log('failed navigation', failure)
+      console.log('failed navigation', failure);
     }
     const asyncRouteStore = useAsyncRouteStoreWidthOut();
     // 在这里设置需要缓存的组件名称

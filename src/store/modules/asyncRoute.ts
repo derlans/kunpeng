@@ -5,6 +5,8 @@ import { store } from '@/store';
 import { asyncRoutes, constantRouter } from '@/router/index';
 import { generatorDynamicRouter } from '@/router/generator-routers';
 import { useProjectSetting } from '@/hooks/setting/useProjectSetting';
+import { useUserStore } from './user';
+import { getViconsIcon } from '@/render/icon';
 
 interface TreeHelperConfig {
   id: string;
@@ -87,12 +89,17 @@ export const useAsyncRouteStore = defineStore({
       this.keepAliveComponents = compNames;
     },
     async generateRoutes(data) {
+      const userStore = useUserStore();
       let accessedRouters;
       const authorities = data.authorities || [];
       const routeFilter = (route) => {
         const { meta } = route;
         const { permissions } = meta || {};
+        // return true;
         if (!permissions) return true;
+        const { icon, name } = userStore.getPermsAuthsMap[permissions] || {};
+        meta.icon = (icon && getViconsIcon(icon)) || meta.icon;
+        meta.title = name || meta.title;
         return authorities.includes(permissions);
       };
       const { getPermissionMode } = useProjectSetting();
@@ -112,6 +119,7 @@ export const useAsyncRouteStore = defineStore({
           console.log(error);
         }
       }
+
       accessedRouters = accessedRouters.filter(routeFilter);
       this.setRouters(accessedRouters);
       this.setMenus(accessedRouters);

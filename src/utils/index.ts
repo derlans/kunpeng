@@ -272,3 +272,14 @@ export function setValues(toSet: object, values: object, keys?: string[]): void 
   }
   Object.assign(toSet, values);
 }
+
+export function flagArray<T>(arr: T[], childrenKey = 'children') {
+  const res: T[] = [];
+  arr.forEach((item) => {
+    res.push(item);
+    if (item[childrenKey] && item[childrenKey].length) {
+      res.push(...flagArray(item[childrenKey] as T[]));
+    }
+  });
+  return res;
+}

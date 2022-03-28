@@ -8,6 +8,7 @@ import { getAuths } from '@/api/auth';
 const Storage = createStorage({ storage: localStorage });
 import { getUserInfo, login } from '@/api/system/user';
 import { storage } from '@/utils/Storage';
+import { flagArray } from '@/utils';
 
 export interface IUserState {
   token: string;
@@ -47,6 +48,12 @@ export const useUserStore = defineStore({
     },
     getUserInfo(): object {
       return this.info;
+    },
+    getPermsAuthsMap(): { [k: string]: AuthNode } {
+      return flagArray(this.authNodeTree).reduce((pre, cur) => {
+        pre[cur.perms] = cur;
+        return pre;
+      }, {});
     },
   },
   actions: {
@@ -100,6 +107,11 @@ export const useUserStore = defineStore({
     async setAuthorities() {
       try {
         const { nav, authorities } = await getAuths();
+        for (const i of flagArray(nav as AuthNode[])) {
+          if (!authorities.includes(i.perms)) {
+            authorities.push(i.perms);
+          }
+        }
         this.authNodeTree = nav;
         this.authorities = authorities;
         return { authorities };
@@ -107,6 +119,7 @@ export const useUserStore = defineStore({
         return Promise.reject(e);
       }
     },
+
     // 登出
     async logout() {
       this.authorities = [];
