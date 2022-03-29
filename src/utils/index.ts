@@ -283,3 +283,18 @@ export function flagArray<T>(arr: T[], childrenKey = 'children') {
   });
   return res;
 }
+
+/**
+ * @description 确认删除
+ */
+export function confirmDelete(func: Function) {
+  window['$dialog'].warning({
+    title: '警告',
+    content: '你确定删除？',
+    positiveText: '确定',
+    negativeText: '不确定',
+    onPositiveClick: () => {
+      func();
+    },
+  });
+}
