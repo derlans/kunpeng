@@ -1,1 +1,0 @@
-import{n as a}from"./index.ea60a1e6.js";import{bu as e,s as r}from"./vendor.192340e4.js";const m="yyyy-MM-dd HH:mm";function t(n,o=m){return e(n,o)}function u(n){return a(n)?r("span",null,t(n)):r("span",null,t(new Date(n)))}export{u as r};
