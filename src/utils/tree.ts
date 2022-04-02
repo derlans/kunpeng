@@ -28,15 +28,8 @@ export function searchParentNode<T>(
     if (node[key] === value) {
       return parentNode;
     }
-    parentNode = node;
     if (node[childrenKey] && node[childrenKey].length) {
-      const result = searchParentNode(
-        node[childrenKey] as T[],
-        value,
-        key,
-        childrenKey,
-        parentNode
-      );
+      const result = searchParentNode(node[childrenKey] as T[], value, key, childrenKey, node);
       if (result) {
         return result as T;
       }
@@ -46,25 +39,18 @@ export function searchParentNode<T>(
 
 export function searchParentNodes<T>(
   nodes: T[],
-  value: any[],
+  values: any[],
   key = 'key',
   childrenKey = 'children',
   parentNode: T | undefined = undefined
 ): T[] {
   const parentNodes: T[] = [];
   for (const node of nodes) {
-    if (node[key] === value) {
-      parentNodes.push(node);
+    if (parentNode && values.includes(node[key]) && !parentNodes.includes(parentNode)) {
+      parentNodes.push(parentNode);
     }
-    parentNode = node;
     if (node[childrenKey] && node[childrenKey].length) {
-      const result = searchParentNodes(
-        node[childrenKey] as T[],
-        value,
-        key,
-        childrenKey,
-        parentNode
-      );
+      const result = searchParentNodes(node[childrenKey] as T[], values, key, childrenKey, node);
       parentNodes.push(...result);
     }
   }

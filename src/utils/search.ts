@@ -28,15 +28,8 @@ export function searchParentNode<T>(
     if (node[key] === value) {
       return parentNode;
     }
-    parentNode = node;
     if (node[childrenKey] && node[childrenKey].length) {
-      const result = searchParentNode(
-        node[childrenKey] as T[],
-        value,
-        key,
-        childrenKey,
-        parentNode
-      );
+      const result = searchParentNode(node[childrenKey] as T[], value, key, childrenKey, node);
       if (result) {
         return result as T;
       }

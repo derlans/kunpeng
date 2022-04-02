@@ -1,13 +1,13 @@
 export interface AuthNode {
   readonly type: AuthNodeType;
-  readonly id?: number;
+  readonly id: string;
   readonly name: string;
   readonly perms: string;
   readonly createTime?: string | number;
   readonly updateTime?: string | number;
   readonly icon?: string;
   readonly path?: string;
-  parentId?: number;
+  parentId?: string;
   orderId?: number;
   component?: string;
   meta?: object;
