@@ -16,9 +16,6 @@
       <n-button type="primary" @click="reloadTable">刷新数据</n-button>
     </template>
   </BasicTable>
-  <NModal v-model:show="showBlackList">
-    <BlackList :userid="currentUserid" />
-  </NModal>
   <NModal v-model:show="showSetRole">
     <SetRoleVue :user="currentUser" @update:sys-roles="handelUpdateUserRole" />
   </NModal>
@@ -31,8 +28,9 @@
   import { BasicForm, useForm } from '@/components/Form/index';
   import { reactive, h, ref } from 'vue';
   import { getUserList } from '@/api/user/index';
-  import BlackList from '@/components/blacklist/index.vue';
   import SetRoleVue from './SetRole.vue';
+  import { useRouter } from 'vue-router';
+  const rounter = useRouter();
   const actionRef = ref();
   const actionColumn = reactive({
     width: 200,
@@ -57,8 +55,7 @@
             label: '黑名单编辑',
             type: 'info',
             onClick: () => {
-              showBlackList.value = true;
-              currentUserid.value = record.id;
+              rounter.push({ name: 'BlackList-User', params: { userid: record.id } });
             },
           },
         ],
@@ -102,8 +99,6 @@
     labelWidth: 80,
     schemas: schemas as any[],
   });
-  const showBlackList = ref(false);
-  const currentUserid = ref('');
   const showSetRole = ref(false);
   let currentUser = ref({} as User);
   function handelUpdateUserRole(v) {
