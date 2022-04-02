@@ -16,7 +16,13 @@
         </n-card>
       </n-grid-item>
       <n-grid-item span="18">
-        <n-card :bordered="false" size="small" :title="typeTitle" class="proCard">
+        <n-card
+          :bordered="false"
+          size="small"
+          :title="typeTitle"
+          style="min-height: 800px"
+          class="proCard"
+        >
           <BasicSetting v-if="type === 1" />
           <SafetySetting v-if="type === 2" />
           <PasswordSetting v-if="type === 3" />
