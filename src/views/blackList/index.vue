@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-  import { BlackList, columns } from './index';
+  import { BlackType, columns } from './index';
   import { BasicTable, TableAction } from '@/components/Table';
   import { reactive, h, ref, unref } from 'vue';
   import {
@@ -107,7 +107,7 @@
     type: 0,
     name: '',
     description: '',
-  } as BlackList);
+  } as BlackType);
   async function updateForm() {
     await updateBlackTypes(unref(form));
     window['$message'].success('更新成功');

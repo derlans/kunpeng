@@ -1,5 +1,5 @@
 import { http } from '@/utils/http/axios';
-import { BlackList } from '@/views/blackList';
+import { BlackType } from '@/views/blackList';
 
 /**
  *
@@ -37,7 +37,7 @@ export function deleteBlackTypes(id: string) {
   });
 }
 
-export function updateBlackTypes(blackList: BlackList) {
+export function updateBlackTypes(blackList: BlackType) {
   return http.request({
     url: '/kunpeng/type/update',
     method: 'POST',
@@ -45,7 +45,7 @@ export function updateBlackTypes(blackList: BlackList) {
   });
 }
 
-export function createBlackTypes(blackList: BlackList) {
+export function createBlackTypes(blackList: BlackType) {
   return http.request({
     url: '/kunpeng/type/create',
     method: 'POST',

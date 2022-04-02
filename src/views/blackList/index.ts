@@ -1,6 +1,6 @@
 import { renderDateTime } from '@/render/date';
 import { DataTableColumns } from 'naive-ui';
-export interface BlackList {
+export interface BlackType {
   id: string;
   type: number;
   name: string;
@@ -9,7 +9,7 @@ export interface BlackList {
   updateTime: string;
 }
 
-export function createColumns(): DataTableColumns<BlackList> {
+export function createColumns(): DataTableColumns<BlackType> {
   return [
     {
       key: 'id',
