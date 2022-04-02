@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia';
 import { getAllAuthTree, createAuth, updateAuth, deleteAuth } from '@/api/auth/index';
 import { AuthNodeTree, AuthNode } from '@/auth/types';
+import { flagArray } from '@/utils';
 interface AuthState {
   allAuthNodeTree: AuthNodeTree;
 }
@@ -14,7 +15,12 @@ export const useAuthStore = defineStore({
   },
   actions: {
     async setAuth() {
-      const allAuthNodeTree = await getAllAuthTree();
+      const allAuthNodeTree: AuthNodeTree = await getAllAuthTree();
+      flagArray(allAuthNodeTree).forEach((auth) => {
+        if (auth.children && auth.children.length === 0) {
+          auth.children = undefined;
+        }
+      });
       this.allAuthNodeTree.length = 0;
       this.allAuthNodeTree.push(...allAuthNodeTree);
       return allAuthNodeTree;

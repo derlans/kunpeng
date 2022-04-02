@@ -69,6 +69,7 @@
   import { reactive, h, ref } from 'vue';
   import { useForm } from '@/hooks/form/useForm';
   import { useAuthStore } from '@/store/modules/auth';
+  import { searchParentNodes } from '@/utils/tree';
   const $dialog = window['$dialog'];
   const $message = window['$message'];
   const actionRef = ref();
@@ -164,7 +165,13 @@
     await roleStore.updateRole(form);
     $message.success('更新成功');
   }
-  function handleUpdateValue(v) {
+  function handleUpdateValue(v: string[]) {
+    const parents = searchParentNodes(authStore.allAuthNodeTree, v, 'id').map((auth) => auth.id);
+    for (const i of parents) {
+      if (!v.includes(i)) {
+        v.push(i);
+      }
+    }
     form.authIds = v;
   }
   const modes = [
