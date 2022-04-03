@@ -83,7 +83,6 @@ export const useUserStore = defineStore({
           storage.set(CURRENT_USER, username, ex);
           storage.set(IS_LOCKSCREEN, false);
           this.setToken(authorization);
-          this.setUserInfo({ username });
         }
         return Promise.resolve(response);
       } catch (e) {
@@ -96,6 +95,7 @@ export const useUserStore = defineStore({
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then((res) => {
+            this.username = res.username;
             this.avatar = res.avatar;
             this.emial = res.email;
             this.phone = res.phone;
