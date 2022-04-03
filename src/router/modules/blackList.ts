@@ -33,13 +33,12 @@ const routes: Array<RouteRecordRaw> = [
         component: () => import('@/views/blackList/index.vue'),
       },
       {
-        path: 'user/:userid',
+        path: 'user',
         name: 'BlackList-User',
-        props: true,
+        props: (route) => ({ userid: route.query.userid }),
         meta: {
           title: '用户黑名单',
           permissions: 'blackList:user',
-          hidden: false,
         },
         component: () => import('@/views/blackList/userBlack.vue'),
       },

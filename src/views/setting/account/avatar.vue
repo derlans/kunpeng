@@ -22,7 +22,7 @@
   const { VITE_GLOB_API_URL } = getAppEnvConfig();
   const Storage = createStorage({ storage: localStorage });
   const UPLOAD_AVATAR_URL = VITE_GLOB_API_URL + '/auth/user/update/avatar';
-  const show = ref(true);
+  const show = ref(false);
   const headers = {
     Authorization: Storage.get(ACCESS_TOKEN),
   };

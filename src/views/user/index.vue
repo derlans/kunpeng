@@ -55,7 +55,7 @@
             label: '黑名单编辑',
             type: 'info',
             onClick: () => {
-              rounter.push({ name: 'BlackList-User', params: { userid: record.id } });
+              rounter.push({ name: 'BlackList-User', query: { userid: record.id } });
             },
           },
         ],

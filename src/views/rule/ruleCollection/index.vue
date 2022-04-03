@@ -151,8 +151,8 @@
       key: 'off',
       render(row) {
         return h(NSwitch, {
-          'checked-value': 1,
-          'unchecked-value': 0,
+          'checked-value': 0,
+          'unchecked-value': 1,
           value: row.off,
           'onUpdate:value': debounce((v) => {
             updateRuleCollectionRule({ ...row, off: v }).then(() => {

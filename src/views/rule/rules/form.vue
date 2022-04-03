@@ -4,7 +4,10 @@
       <h2 class="text-xl text-center font-bold">{{ currentMode.descriptions }}</h2>
       <n-form :disabled="disabled">
         <n-form-item label="规则名" path="ruleName">
-          <n-input v-model:value="form.ruleName" />
+          <n-input
+            v-model:value="form.ruleName"
+            :disabled="currentMode.value === RuleFormMode.UPDATE_RULE"
+          />
         </n-form-item>
         <n-form-item label="描述" path="description">
           <n-input v-model:value="form.description" />

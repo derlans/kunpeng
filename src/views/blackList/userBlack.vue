@@ -1,6 +1,6 @@
 <template>
   <n-card title="用户黑名单" style="min-height: 800px">
-    <div class="flex justify-start flex-wrap">
+    <div class="flex justify-start flex-wrap" v-show="currentUserid">
       <div
         class="relative m-5"
         v-for="blackType in isBlackTypes"
@@ -60,28 +60,38 @@
   import { CloseOutlined, PlusOutlined } from '@vicons/antd';
   import { getBlackList, setBlackType } from '@/api/blacklist';
   import { getBlackTypes } from '@/api/blacklist';
-  import { computed, reactive } from 'vue';
+  import { computed, reactive, Ref, ref, unref } from 'vue';
   import { BlackType } from './index';
   import { transformTypes } from './help';
   const Props = defineProps<{
-    userid: string;
+    userid?: string;
   }>();
+  const currentUserid = ref('');
   const blackTypes: BlackType[] = reactive([]);
   getBlackTypes().then((res: BlackType[]) => {
     blackTypes.push(...res);
   });
-  const blacklist: number[] = reactive([]);
-  getBlackList(Props.userid)
-    .then((res) => {
-      blacklist.push(...transformTypes(res.value));
-    })
-    .catch(() => {});
-  const isBlackTypes = computed(() => blackTypes.filter((blackType) => blacklist[blackType.type]));
+  if (Props.userid) {
+    currentUserid.value = unref(Props.userid);
+    updateUser();
+  }
+  const blacklist: Ref<number[]> = ref([]);
+  function updateUser() {
+    getBlackList(currentUserid.value)
+      .then((res) => {
+        blacklist.value = transformTypes(res.value);
+      })
+      .catch(() => {});
+  }
+
+  const isBlackTypes = computed(() =>
+    blackTypes.filter((blackType) => blacklist.value[blackType.type])
+  );
   const notBlackTypes = computed(() =>
-    blackTypes.filter((blackType) => !blacklist[blackType.type])
+    blackTypes.filter((blackType) => !blacklist.value[blackType.type])
   );
   async function setBlack(blackType: BlackType) {
-    await setBlackType(Props.userid, blackType.type, !blacklist[blackType.type]);
-    blacklist[blackType.type] = blacklist[blackType.type] ? 0 : 1;
+    await setBlackType(currentUserid.value, blackType.type, !blacklist.value[blackType.type]);
+    blacklist.value[blackType.type] = blacklist.value[blackType.type] ? 0 : 1;
   }
 </script>
