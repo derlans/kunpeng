@@ -27,7 +27,8 @@
   import { reactive, ref } from 'vue';
   import { useMessage } from 'naive-ui';
   import { updateUser } from '@/api/system/user';
-
+  import { useUserStore } from '@/store/modules/user';
+  const userStore = useUserStore();
   const rules = {
     username: {
       required: true,
@@ -49,9 +50,9 @@
   const message = useMessage();
 
   const formValue = reactive({
-    username: '',
-    phone: '',
-    city: '',
+    username: userStore.username,
+    phone: userStore.phone,
+    city: userStore.city,
   });
 
   function formSubmit() {

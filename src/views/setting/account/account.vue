@@ -24,6 +24,7 @@
           class="proCard"
         >
           <BasicSetting v-if="type === 1" />
+          <Avatar v-if="type === 4" />
           <SafetySetting v-if="type === 2" />
           <PasswordSetting v-if="type === 3" />
         </n-card>
@@ -33,6 +34,7 @@
 </template>
 <script lang="ts" setup>
   import { ref } from 'vue';
+  import Avatar from './avatar.vue';
   import BasicSetting from './BasicSetting.vue';
   import SafetySetting from './SafetySetting.vue';
   import PasswordSetting from './PasswordSetting.vue';
@@ -51,6 +53,11 @@
       name: '安全设置',
       desc: '密码设置',
       key: 3,
+    },
+    {
+      name: '修改头像',
+      desc: '修改头像',
+      key: 4,
     },
   ];
 

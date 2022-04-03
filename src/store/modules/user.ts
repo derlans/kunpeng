@@ -13,7 +13,8 @@ import { flagArray } from '@/utils';
 export interface IUserState {
   token: string;
   username: string;
-  welcome: string;
+  phone: string;
+  city: string;
   avatar: string;
   emial: string;
   info: any;
@@ -27,7 +28,8 @@ export const useUserStore = defineStore({
     token: Storage.get(ACCESS_TOKEN, ''),
     username: '',
     emial: '',
-    welcome: '',
+    city: '',
+    phone: '',
     avatar: '',
     info: Storage.get(CURRENT_USER, {}),
     authNodeTree: [],
@@ -94,8 +96,10 @@ export const useUserStore = defineStore({
       return new Promise((resolve, reject) => {
         getUserInfo()
           .then((res) => {
-            this.setAvatar(res.avatar);
+            this.avatar = res.avatar;
             this.emial = res.email;
+            this.phone = res.phone;
+            this.city = res.city;
             resolve(res);
           })
           .catch((error) => {
