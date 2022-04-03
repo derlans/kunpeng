@@ -45,7 +45,7 @@
     reset();
   });
   const userStore = useUserStore();
-  const current = ref(2);
+  const current = ref(1);
   const currentStatus = ref<StepsProps['status']>('process');
   const code = ref('');
   async function sendCode() {
