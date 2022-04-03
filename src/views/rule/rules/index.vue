@@ -40,7 +40,7 @@
   const message = useMessage();
   const actionRef = ref();
   const actionColumn = reactive({
-    width: 200,
+    width: 300,
     title: '操作',
     key: 'action',
     align: 'center',
@@ -58,6 +58,16 @@
             label: '查看详情',
             type: 'success',
             onClick: handleLookDetail.bind(null, record),
+          },
+          {
+            label: '更新',
+            type: 'info',
+            onClick: () => {
+              router.push({
+                path: '/rule/ruleEditor',
+                query: { modeValue: RuleFormMode.UPDATE_RULE, id: record.id },
+              });
+            },
           },
         ],
       });
