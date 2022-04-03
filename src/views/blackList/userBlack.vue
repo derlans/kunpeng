@@ -41,7 +41,7 @@
           <PlusOutlined class="text-black" />
         </n-icon>
         <div
-          class="rounded shadow w-32 h-32 text-center leading-7 flex justify-center items-center flex-col"
+          class="rounded shadow w-32 h-32 text-center leading-7 flex justify-center items-center flex-col bg-blue-500"
         >
           <span>类型：{{ blackType.type }}</span>
           <n-ellipsis style="max-width: 6rem">

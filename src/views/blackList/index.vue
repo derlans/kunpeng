@@ -4,7 +4,7 @@
     :request="loadDataTable"
     :row-key="(row) => row.id"
     :actionColumn="actionColumn"
-    :scroll-x="1800"
+    :scroll-x="1000"
     ref="actionRef"
   >
     <template #toolbar>
