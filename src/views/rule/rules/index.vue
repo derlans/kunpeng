@@ -32,7 +32,7 @@
   import { h, reactive, ref } from 'vue';
   import { useMessage } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
-  import { getRuleList } from '@/api/rule/index';
+  import { deleteRule, getRuleList } from '@/api/rule/index';
   import { columns } from './columns';
   import { useRouter } from 'vue-router';
   import { RuleFormMode } from './index';
@@ -90,10 +90,10 @@
     actionRef.value.reload();
   }
 
-  function handleDelete(record: Recordable) {
-    console.log('点击了删除', record);
-
-    message.info('点击了删除');
+  async function handleDelete(record: Recordable) {
+    await deleteRule(record.id);
+    message.info('已删除');
+    reloadTable();
   }
   function handleLookDetail(record: Recordable) {
     router.push({

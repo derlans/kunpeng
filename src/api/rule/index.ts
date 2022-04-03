@@ -1,10 +1,25 @@
 import { http } from '@/utils/http/axios';
 import { rule } from '@/views/rule/rules/index';
-//获取日志列表
+//获取规则列表
 export function getRuleList() {
   return http.request<rule[]>({
     url: '/kunpeng/rule/list',
     method: 'GET',
+  });
+}
+// 删除规则
+export function deleteRule(id: string) {
+  return http.request({
+    url: `/kunpeng/rule/remove/${id}`,
+    method: 'DELETE',
+  });
+}
+// 更新 新增规则集
+export function updateRule(rule: rule) {
+  return http.request({
+    url: '/kunpeng/rule/update',
+    method: 'POST',
+    params: rule,
   });
 }
 //获取某一规则下的列表
@@ -14,6 +29,7 @@ export function getCollectionRules(id: string) {
     method: 'GET',
   });
 }
+
 interface ruleCollection {
   page: number;
   size: number;

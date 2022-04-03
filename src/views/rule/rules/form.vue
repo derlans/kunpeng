@@ -33,6 +33,7 @@
             type="info"
             v-if="currentMode.value === RuleFormMode.CREATE_NEW_RULE"
             class="w-40"
+            @click="modes[0].event.craeteNewRule"
           >
             创建
           </n-button>
@@ -40,6 +41,7 @@
             type="success"
             v-else-if="currentMode.value === RuleFormMode.UPDATE_RULE"
             class="w-40"
+            @click="modes[1].event.updateRule"
           >
             修改
           </n-button>
@@ -50,32 +52,19 @@
 </template>
 
 <script setup lang="ts">
-  import { reactive, ref, computed } from 'vue';
+  import { ref, computed } from 'vue';
   import { useMessage } from 'naive-ui';
   import { useRoute } from 'vue-router';
-  import { getRuleList } from '@/api/rule';
-  import { RuleFormMode, DEFAUTT_JAVA_CODE, RuleFormModeValues } from './index';
+  import { getRuleList, updateRule } from '@/api/rule';
+  import { RuleFormMode, DEFAUTT_JAVA_CODE, RuleFormModeValues, rule } from './index';
   import codeEditor from '@/components/codeEditor/index.vue';
   const route = useRoute();
   const message = useMessage();
-  const javaCodeEditor = ref();
+  const javaCodeEditor = ref(null);
   const disabled = ref(false);
-  // 定义表单
-  function setFormValue(values) {
-    const fields = Object.keys(form);
-    Object.keys(values).forEach((key) => {
-      const value = values[key];
-      if (fields.includes(key)) {
-        form[key] = value;
-      }
-    });
-  }
-  // 获取表单
-  function getFormValue() {
-    return { ...form };
-  }
+
   // 表格默认数据
-  function getDefaultForm() {
+  function getDefaultForm(): rule {
     const now = new Date().getTime();
     return {
       createTime: now,
@@ -83,9 +72,9 @@
       ruleName: '',
       description: '',
       code: DEFAUTT_JAVA_CODE,
-    };
+    } as rule;
   }
-  const form = reactive(getDefaultForm());
+  const form = ref(getDefaultForm());
   // 不同的模式下的业务
   const modes = [
     {
@@ -93,12 +82,12 @@
       descriptions: '创建新规则',
       meta: {},
       trigger() {
-        setFormValue(getDefaultForm());
+        form.value = getDefaultForm();
       },
       event: {
         async craeteNewRule() {
-          // const from = getFormValue();
-          // 验证
+          await updateRule(form.value);
+          message.success('创建成功');
         },
       },
     },
@@ -116,10 +105,16 @@
         if (currentRule) {
           currentRule.createTime = new Date(currentRule.createTime).getTime();
           currentRule.updateTime = new Date(currentRule.updateTime).getTime();
-          setFormValue(currentRule);
+          form.value = currentRule;
           return;
         }
         message.error('没有找到该规则');
+      },
+      event: {
+        async updateRule() {
+          await updateRule(form.value);
+          message.success('更新成功');
+        },
       },
     },
     {
@@ -130,7 +125,7 @@
         await getMode(RuleFormMode.UPDATE_RULE)?.trigger();
       },
     },
-  ];
+  ] as const;
   function getMode(modeValue: RuleFormModeValues) {
     return modes.find((v) => v.value === modeValue);
   }
