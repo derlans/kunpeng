@@ -57,7 +57,7 @@
       <ColumnSetting />
     </div>
   </div>
-  <div class="s-table">
+  <div class="s-table" style="min-height: 800px">
     <n-data-table
       ref="tableElRef"
       v-bind="getBindValues"
