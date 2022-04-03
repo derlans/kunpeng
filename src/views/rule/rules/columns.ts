@@ -23,14 +23,14 @@ export const columns: ruleColumn[] = [
     title: '创建时间',
     key: 'createTime',
     render(row) {
-      return renderDateTime(row.createTime);
+      return renderDateTime(new Date(row.createTime).getTime() + 1000 * 60 * 60 * 8);
     },
   },
   {
     title: '更新时间',
     key: 'updateTime',
     render(row) {
-      return renderDateTime(row.updateTime);
+      return renderDateTime(new Date(row.updateTime).getTime() + 1000 * 60 * 60 * 8);
     },
   },
   {

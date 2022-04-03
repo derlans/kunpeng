@@ -74,6 +74,17 @@ export function createRuleCollection(params) {
     params,
   });
 }
+/**
+ *
+ * @description 更新规则集描述
+ */
+export function updateRuleCollectionDes(params) {
+  return http.request({
+    url: '/kunpeng/path/name/update',
+    method: 'POST',
+    params,
+  });
+}
 
 /**
  *
@@ -106,5 +117,11 @@ export function deleteRuleCollectionRule(id) {
   return http.request({
     url: `/kunpeng/path/remove/${id}`,
     method: 'DELETE',
+  });
+}
+
+export function refresh() {
+  return http.request({
+    url: '/kunpeng/config/refresh',
   });
 }

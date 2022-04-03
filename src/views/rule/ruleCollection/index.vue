@@ -17,10 +17,30 @@
     >
       <template #toolbar>
         <n-button type="primary" @click="reloadTable" class="mr-3">刷新数据</n-button>
-        <n-button type="success" @click="() => (showModal = true)">创建规则集</n-button>
+        <n-button type="warning" @click="refreshRule" class="mr-3">部署上线</n-button>
+        <n-button
+          type="success"
+          @click="
+            () => {
+              showModal = true;
+              mode = 1;
+              formParams = {
+                description: '',
+                pathName: '',
+                name: '',
+              };
+            }
+          "
+          >创建规则集</n-button
+        >
       </template>
     </BasicTable>
-    <n-modal v-model:show="showModal" :show-icon="false" preset="dialog" title="新建规则集">
+    <n-modal
+      v-model:show="showModal"
+      :show-icon="false"
+      preset="dialog"
+      :title="mode === 1 ? '新建规则集' : '更新描述'"
+    >
       <n-form
         :model="formParams"
         :rules="formParamsRules"
@@ -30,10 +50,14 @@
         class="py-4"
       >
         <n-form-item label="名称" path="name">
-          <n-input placeholder="请输入名称" v-model:value="formParams.name" />
+          <n-input
+            placeholder="请输入名称"
+            v-model:value="formParams.name"
+            :disabled="mode === 2"
+          />
         </n-form-item>
         <n-form-item label="路径" path="pathName">
-          <n-input v-model:value="formParams.pathName" />
+          <n-input v-model:value="formParams.pathName" :disabled="mode === 2" />
         </n-form-item>
         <n-form-item label="描述" path="description">
           <n-input v-model:value="formParams.description" />
@@ -43,7 +67,10 @@
       <template #action>
         <n-space>
           <n-button @click="() => (showModal = false)">取消</n-button>
-          <n-button type="info" @click="handelCreateRuleCollection">确定</n-button>
+          <n-button type="info" @click="handelCreateRuleCollection" v-if="mode === 1"
+            >确定</n-button
+          >
+          <n-button type="info" @click="updateRuleCollection" v-if="mode === 2">更新</n-button>
         </n-space>
       </template>
     </n-modal>
@@ -80,8 +107,8 @@
         <n-form-item label="是否启用" path="off">
           <n-switch
             v-model:value="ruleCollectionRuleForm.off"
-            :checked-value="1"
-            :unchecked-value="0"
+            :checked-value="0"
+            :unchecked-value="1"
           />
         </n-form-item>
       </n-form>
@@ -109,9 +136,11 @@
     getRuleCollection,
     removeRuleCollection,
     createRuleCollection,
+    updateRuleCollectionDes,
     updateRuleCollectionRule,
     deleteRuleCollectionRule,
     createRuleCollectionRule,
+    refresh,
   } from '@/api/rule/index';
 
   const $message = window['$message'];
@@ -199,7 +228,7 @@
   ];
   // 新建规则集
   const showModal = ref(false);
-  const formParams = reactive({
+  const formParams = ref({
     description: '',
     pathName: '',
     name: '',
@@ -221,7 +250,7 @@
     },
   };
   function handelCreateRuleCollection() {
-    createRuleCollection({ ...formParams }).then(() => {
+    createRuleCollection(formParams.value).then(() => {
       showModal.value = false;
       $message.success('创建成功');
       reloadTable();
@@ -288,9 +317,10 @@
     },
   ];
   // 规则集列表
+  const mode = ref(1);
   const actionRef = ref();
   const actionColumn = reactive({
-    width: 200,
+    width: 300,
     title: '操作',
     key: 'action',
     fixed: 'right',
@@ -310,6 +340,15 @@
             onClick: () => {
               showCreateRuleCollectionRule.value = true;
               ruleCollectionRuleForm.path = record.pathName;
+            },
+          },
+          {
+            label: '修改描述',
+            type: 'info',
+            onClick: () => {
+              formParams.value = record;
+              showModal.value = true;
+              mode.value = 2;
             },
           },
         ],
@@ -368,6 +407,16 @@
           .catch(() => {});
       },
     });
+  }
+  async function refreshRule() {
+    await refresh();
+    window['$message'].success('部署成功');
+  }
+  async function updateRuleCollection() {
+    await updateRuleCollectionDes(formParams.value);
+    $message.success('更新成功');
+    showModal.value = false;
+    reloadTable();
   }
 </script>
 

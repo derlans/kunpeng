@@ -98,7 +98,7 @@
   function handleLookDetail(record: Recordable) {
     router.push({
       path: '/rule/ruleEditor',
-      query: { modeValue: RuleFormMode.UPDATE_RULE, id: record.id },
+      query: { modeValue: RuleFormMode.LOOK_RULE, id: record.id },
     });
   }
 </script>
