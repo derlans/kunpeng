@@ -115,6 +115,11 @@
   function openCreateForm() {
     currentMode.value = modes[0];
     showModal.value = true;
+    form.value = {
+      type: 0,
+      name: '',
+      description: '',
+    } as BlackType;
   }
   async function createNewType() {
     await createBlackTypes(unref(form));
