@@ -1,6 +1,9 @@
 <template>
   <n-card title="用户黑名单" style="min-height: 800px">
+    <div class="w-96 h-4 ml-5 text-lg">当前用户id：{{ currentUserid }}</div>
+    <UserSelect class="w-96 h-4 m-5" @on-select="updateCurrentUser" />
     <div class="flex justify-start flex-wrap" v-show="currentUserid">
+      <n-divider>黑名单中的类型</n-divider>
       <div
         class="relative m-5"
         v-for="blackType in isBlackTypes"
@@ -41,7 +44,7 @@
           <PlusOutlined class="text-black" />
         </n-icon>
         <div
-          class="rounded shadow w-32 h-32 text-center leading-7 flex justify-center items-center flex-col bg-blue-500"
+          class="rounded shadow w-32 h-32 text-center leading-7 flex justify-center items-center flex-col bg-blue-100"
         >
           <span>类型：{{ blackType.type }}</span>
           <n-ellipsis style="max-width: 6rem">
@@ -63,6 +66,8 @@
   import { computed, reactive, Ref, ref, unref } from 'vue';
   import { BlackType } from './index';
   import { transformTypes } from './help';
+  import UserSelect from '@/components/UserSelect/index.vue';
+
   const Props = defineProps<{
     userid?: string;
   }>();
@@ -93,5 +98,9 @@
   async function setBlack(blackType: BlackType) {
     await setBlackType(currentUserid.value, blackType.type, !blacklist.value[blackType.type]);
     blacklist.value[blackType.type] = blacklist.value[blackType.type] ? 0 : 1;
+  }
+  function updateCurrentUser(v) {
+    currentUserid.value = v;
+    updateUser();
   }
 </script>
