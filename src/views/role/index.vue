@@ -186,3 +186,9 @@
   ];
   const currentMode = ref(modes[0]);
 </script>
+
+<style scoped>
+  :deep .n-tag__content {
+    color: rgb(0, 102, 255);
+  }
+</style>
