@@ -24,19 +24,38 @@
           <n-avatar :size="40" :src="userStore.avatar" @click="showEditAvatar" />
         </n-form-item>
         <n-form-item label="用户名" path="username">
-          <n-input v-model:value="formValue.username" placeholder="请输入用户名" />
+          <n-input
+            v-model:value="formValue.username"
+            placeholder="请输入用户名"
+            style="width: 300px"
+          />
         </n-form-item>
         <n-form-item label="联系电话" path="phone">
-          <n-input placeholder="请输入联系电话" v-model:value="formValue.phone" />
+          <n-input
+            placeholder="请输入联系电话"
+            v-model:value="formValue.phone"
+            style="width: 300px"
+          />
         </n-form-item>
-
+        <n-form-item label="生日" path="birthday">
+          <n-date-picker
+            v-model:value="formValue.birthday"
+            type="date"
+            clearable
+            style="width: 300px"
+          />
+        </n-form-item>
         <n-form-item label="联系地址" path="city">
-          <n-input v-model:value="formValue.city" placeholder="请输入所在城市" />
+          <n-input
+            v-model:value="formValue.city"
+            placeholder="请输入所在城市"
+            style="width: 300px"
+          />
         </n-form-item>
 
         <div>
           <n-space>
-            <n-button type="primary" @click="formSubmit">更新基本信息</n-button>
+            <n-button type="primary" @click="formSubmit" class="ml-40">更新基本信息</n-button>
           </n-space>
         </div>
       </n-form>
@@ -53,6 +72,7 @@
   import { ACCESS_TOKEN } from '@/store/mutation-types';
   import { getAppEnvConfig } from '@/utils/env';
   import myUpload from 'vue-image-crop-upload/upload-3.vue';
+  import { getTime } from 'date-fns';
   const { VITE_GLOB_API_URL } = getAppEnvConfig();
   const Storage = createStorage({ storage: localStorage });
   const UPLOAD_AVATAR_URL = VITE_GLOB_API_URL + '/auth/user/update/avatar';
@@ -93,12 +113,13 @@
     username: userStore.username,
     phone: userStore.phone,
     city: userStore.city,
+    birthday: getTime(new Date(userStore.birthday)),
   });
 
   function formSubmit() {
     formRef.value.validate((errors) => {
       if (!errors) {
-        updateUser(formValue)
+        updateUser({ ...formValue, birthday: new Date(formValue.birthday).toISOString() })
           .then(() => {
             message.success('成功');
           })

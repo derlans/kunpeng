@@ -27,11 +27,29 @@ const routes: Array<RouteRecordRaw> = [
         component: IFrame,
       },
       {
-        path: 'naive',
-        name: 'frame-naive',
+        path: 'Elastic',
+        name: 'frame-Elastic',
         meta: {
           title: '接口控制',
           frameSrc: 'http://124.70.101.198:5601/login',
+        },
+        component: IFrame,
+      },
+      {
+        path: 'nacos',
+        name: 'frame-nacos',
+        meta: {
+          title: 'nacos',
+          frameSrc: 'http://lhk.life/nacos/',
+        },
+        component: IFrame,
+      },
+      {
+        path: 'sentinel',
+        name: 'frame-sentinel',
+        meta: {
+          title: '流控中心',
+          frameSrc: 'lhk.life/sentinel',
         },
         component: IFrame,
       },

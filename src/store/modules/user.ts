@@ -16,6 +16,7 @@ export interface IUserState {
   phone: string;
   city: string;
   avatar: string;
+  birthday: string;
   emial: string;
   info: any;
   authNodeTree: AuthNodeTree;
@@ -29,6 +30,7 @@ export const useUserStore = defineStore({
     username: '',
     emial: '',
     city: '',
+    birthday: '',
     phone: '',
     avatar: '',
     info: Storage.get(CURRENT_USER, {}),
@@ -96,6 +98,7 @@ export const useUserStore = defineStore({
         getUserInfo()
           .then((res) => {
             this.username = res.username;
+            this.birthday = res.birthday;
             this.avatar = res.avatar;
             this.emial = res.email;
             this.phone = res.phone;
