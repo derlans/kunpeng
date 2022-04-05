@@ -39,14 +39,28 @@ export enum RuleFormMode {
   LOOK_RULE = 'LOOK_RULE',
 }
 export type RuleFormModeValues = keyof typeof RuleFormMode;
-export const DEFAUTT_JAVA_CODE = `package lhk.life.kunpeng.core;
-
-
-import lhk.life.kunpeng.entity.BaseRule;
+export const DEFAUTT_JAVA_CODE = `import lhk.life.kunpeng.entity.BaseRule;
 import org.jeasy.rules.annotation.Action;
-import org.jeasy.rules.annotation.Condition; 
+import org.jeasy.rules.annotation.Condition;
 import org.jeasy.rules.annotation.Fact;
-import org.jeasy.rules.annotation.Rule;`;
+import org.jeasy.rules.annotation.Rule;
+import java.util.Map;
+
+@Rule(name = "", description = "")
+public class AddRule extends BaseRule {
+
+    @Condition
+    public boolean check(@Fact("params") Map params) {
+
+        return true;
+    }
+
+    @Action
+    public void action() {
+
+    }
+}
+`;
 // interface InternalRowData {
 //   // [key: string]: unknown;
 //   key: unknown;

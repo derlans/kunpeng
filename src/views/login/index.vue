@@ -6,7 +6,7 @@
         <div class="view-account-top-logo">
           <img src="~@/assets/images/account-logo.png" alt="" />
         </div>
-        <div class="view-account-top-desc">Naive Ui Admin中台前端/设计解决方案</div>
+        <div class="view-account-top-desc">鲲鹏风控规则引擎</div>
       </div>
       <div class="view-account-form">
         <n-form
@@ -44,9 +44,6 @@
               <div class="flex-initial">
                 <n-checkbox v-model:checked="autoLogin">自动登录</n-checkbox>
               </div>
-              <div class="flex-initial order-last">
-                <a href="javascript:">忘记密码</a>
-              </div>
             </div>
           </n-form-item>
           <n-form-item>
@@ -63,13 +60,6 @@
                 <a href="javascript:">
                   <n-icon size="24" color="#2d8cf0">
                     <LogoGithub />
-                  </n-icon>
-                </a>
-              </div>
-              <div class="flex-initial mx-2">
-                <a href="javascript:">
-                  <n-icon size="24" color="#2d8cf0">
-                    <LogoFacebook />
                   </n-icon>
                 </a>
               </div>
@@ -90,7 +80,7 @@
   import { useUserStore } from '@/store/modules/user';
   import { useMessage } from 'naive-ui';
   import { ResultEnum } from '@/enums/httpEnum';
-  import { PersonOutline, LockClosedOutline, LogoGithub, LogoFacebook } from '@vicons/ionicons5';
+  import { PersonOutline, LockClosedOutline, LogoGithub } from '@vicons/ionicons5';
   import { PageEnum } from '@/enums/pageEnum';
   interface FormState {
     username: string;
@@ -104,8 +94,8 @@
   const LOGIN_NAME = PageEnum.BASE_LOGIN_NAME;
 
   const formInline = reactive({
-    username: 'derlan',
-    password: 'acbd1234',
+    username: '',
+    password: '',
     isCaptcha: true,
   });
 

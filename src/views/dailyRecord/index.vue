@@ -24,16 +24,11 @@
 
 <script lang="ts" setup>
   import { h, reactive, ref, nextTick } from 'vue';
-  import { useMessage } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
   import { getDailyRecordList, getServiceNames } from '@/api/dailyRecord/index';
   import { columns } from './columns';
   import { levelOpations } from './index';
-  // import { useRouter } from 'vue-router';
-  // import {  dailyRecord } from './index';
-  // import dailyRecordData from './dailyRecord.json';
-  const message = useMessage();
   const formKey = ref(0);
   const actionRef = ref();
   const indexNSelect: {
@@ -125,11 +120,6 @@
         style: 'button',
         actions: [
           {
-            label: '删除',
-            onClick: handleDelete.bind(null, record),
-            type: 'error',
-          },
-          {
             label: '查看详情',
             onClick: handleLookDetail.bind(null, record),
             type: 'primary',
@@ -175,12 +165,6 @@
 
   function reloadTable() {
     actionRef.value.reload();
-  }
-
-  function handleDelete(record: Recordable) {
-    console.log('点击了删除', record);
-
-    message.info('点击了删除');
   }
 
   async function handleSubmit() {

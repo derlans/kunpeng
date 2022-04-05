@@ -17,7 +17,7 @@ export function updateSensitiveWords(params: string[]) {
 export function matchSensitiveWords(content: string, checkAll = true) {
   return http.request({
     url: '/kunpeng/dfa/query',
-    method: 'GET',
+    method: 'POST',
     data: {
       content,
       checkAll,
@@ -28,7 +28,7 @@ export function matchSensitiveWords(content: string, checkAll = true) {
 export function filterSensitiveWords(content: string, type = 1) {
   return http.request({
     url: '/kunpeng/dfa/filter',
-    method: 'GET',
+    method: 'POST',
     data: {
       content,
       type,

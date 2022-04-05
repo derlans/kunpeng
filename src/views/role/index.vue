@@ -189,6 +189,12 @@
 
 <style scoped>
   :deep .n-tag__content {
-    color: rgb(0, 102, 255);
+    color: white;
+  }
+  :deep .n-tag {
+    background-color: rgb(0, 89, 255);
+  }
+  :deep .n-base-icon.n-base-close.n-tag__close {
+    color: white;
   }
 </style>

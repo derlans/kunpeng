@@ -68,8 +68,13 @@
       return;
     }
     sensitiveWords.value.push(newWord.value);
+    update();
+  }
+  function update() {
     updateSensitiveWords(sensitiveWords.value).then(() => {
       window['$message'].success('更新成功');
+      isShowBatchCreate.value = false;
+      reloadTable();
     });
   }
   const actionColumn = reactive({
@@ -118,8 +123,6 @@
   }
   function batchCreate() {
     sensitiveWords.value = batchWords.value.split(';').filter(Boolean);
-    updateSensitiveWords(sensitiveWords.value).then(() => {
-      window['$message'].success('更新成功');
-    });
+    update();
   }
 </script>

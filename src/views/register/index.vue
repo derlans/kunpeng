@@ -9,14 +9,8 @@
         <div class="view-account-top-desc">鲲鹏风控平台 注册</div>
       </div>
       <div class="view-account-form">
-        <n-form
-          ref="formRef"
-          label-placement="left"
-          size="large"
-          :model="formInline"
-          :rules="rules"
-        >
-          <n-form-item path="username">
+        <n-form ref="formRef" size="large" :model="formInline" :rules="rules">
+          <n-form-item path="username" label="用户名">
             <n-input v-model:value="formInline.username" placeholder="请输入用户名">
               <template #prefix>
                 <n-icon size="18" color="#808695">
@@ -25,7 +19,7 @@
               </template>
             </n-input>
           </n-form-item>
-          <n-form-item path="password">
+          <n-form-item path="password" label="密码">
             <n-input
               v-model:value="formInline.password"
               type="password"
@@ -39,7 +33,7 @@
               </template>
             </n-input>
           </n-form-item>
-          <n-form-item path="email">
+          <n-form-item path="email" label="邮箱">
             <n-input v-model:value="formInline.email" type="email" placeholder="请输入邮箱">
               <template #prefix>
                 <n-icon size="18" color="#808695">
@@ -48,7 +42,7 @@
               </template>
             </n-input>
           </n-form-item>
-          <n-form-item path="phone">
+          <n-form-item path="phone" label="电话">
             <n-input
               v-model:value="formInline.phone"
               type="phone"
@@ -62,7 +56,7 @@
               </template>
             </n-input>
           </n-form-item>
-          <n-form-item path="city">
+          <!-- <n-form-item path="city" label="城市">
             <n-input v-model:value="formInline.city" type="city" placeholder="请输入城市">
               <template #prefix>
                 <n-icon size="18" color="#808695">
@@ -70,7 +64,7 @@
                 </n-icon>
               </template>
             </n-input>
-          </n-form-item>
+          </n-form-item> -->
           <n-form-item>
             <n-button type="primary" @click="handleSubmit" size="large" :loading="loading" block>
               注册
@@ -93,14 +87,13 @@
   import { reactive, ref } from 'vue';
   import { useRouter } from 'vue-router';
   import { useMessage } from 'naive-ui';
-  import { ResultEnum } from '@/enums/httpEnum';
   import { register } from '@/api/system/user';
   interface FormState {
     username: string;
     password: string;
     email: string;
     phone: string;
-    city: string;
+    city?: string;
   }
 
   const formRef = ref();
@@ -112,12 +105,13 @@
     password: '',
     email: '',
     phone: '',
-    city: '',
   });
 
   const rules = {
     username: { required: true, message: '请输入用户名', trigger: 'blur' },
     password: { required: true, message: '请输入密码', trigger: 'blur' },
+    email: { required: true, message: '请输入邮箱', trigger: 'blur' },
+    phone: { required: true, message: '请输入手机号', trigger: 'blur' },
   };
 
   const router = useRouter();
@@ -126,7 +120,7 @@
     e.preventDefault();
     formRef.value.validate(async (errors) => {
       if (!errors) {
-        const { username, password, email, phone, city } = formInline;
+        const { username, password, email, phone } = formInline;
         loading.value = true;
 
         const params: FormState = {
@@ -134,16 +128,13 @@
           password,
           email,
           phone,
-          city,
         };
 
         try {
-          const { code, message: msg } = await register(params);
-          if (code == ResultEnum.SUCCESS) {
-            router.replace({ path: '/login' });
-          } else {
-            message.info(msg || '注册失败');
-          }
+          await register(params);
+          router.replace({ path: '/login' });
+        } catch {
+          message.warning('用户名或者邮箱已存在');
         } finally {
           loading.value = false;
         }

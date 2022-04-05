@@ -54,9 +54,15 @@ export function createRouterGuards(router: Router) {
       next();
       return;
     }
+    let authorities = [];
+    try {
+      const { authorities: _authorities } = await userStore.setAuthorities();
+      authorities = _authorities;
+      await userStore.GetInfo();
+    } catch (error) {
+      next('/login');
+    }
 
-    const { authorities } = await userStore.setAuthorities();
-    await userStore.GetInfo();
     const routes = await asyncRouteStore.generateRoutes({ authorities });
 
     // 动态添加可访问路由表
