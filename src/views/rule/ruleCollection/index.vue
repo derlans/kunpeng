@@ -126,7 +126,7 @@
 <script lang="ts" setup>
   import { h, reactive, ref, computed } from 'vue';
   import { debounce } from '@/utils/lodashChunk';
-  import { NDataTable, NSwitch, NSpace, NButton } from 'naive-ui';
+  import { NDataTable, NSwitch, NSpace, NButton, NInputNumber } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
   import { columns as ruleColumns } from '../rules/columns';
@@ -146,6 +146,24 @@
   const $message = window['$message'];
   // 定义表格
   const _ruleColumns = [
+    {
+      title: '优先级',
+      key: 'priority',
+      render(row) {
+        return h(NInputNumber, {
+          style: {
+            width: '100px',
+          },
+          value: row.priority,
+          'onUpdate:value': debounce((v) => {
+            updateRuleCollectionRule({ ...row, priority: v }).then(() => {
+              $message.success('更新成功');
+              row.priority = v;
+            });
+          }, 500),
+        });
+      },
+    },
     {
       title: '是否开启',
       key: 'off',

@@ -37,8 +37,4 @@ export const columns: ruleColumn[] = [
     title: '操作人',
     key: 'operator',
   },
-  {
-    title: '规则优先级',
-    key: 'priority',
-  },
 ];

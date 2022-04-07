@@ -1,13 +1,13 @@
 <template>
   <n-card title="敏感词过滤展示" style="min-height: 1000px">
     <div class="flex justify-center items-center" style="height: 600px">
-      <div class="p-4 bg-gray-100 flex justify-start items-center flex-col">
+      <div class="p-4 bg-gray-100 flex justify-start items-center flex-col" style="width: 40%">
         <n-input
           type="textarea"
           round
           clearable
           v-model:value="words"
-          style="height: 300px; width: 40%"
+          style="height: 300px; width: 100%"
           class="text-base"
         />
         <n-button type="primary" class="w-52 mt-5" @click="filter">过滤</n-button>
