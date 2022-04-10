@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'frame-nacos',
         meta: {
           title: '服务中心',
-          frameSrc: 'http://lhk.life/nacos/',
+          frameSrc: 'http://kunpeng.lhk.life/nacos/',
           permissions: 'nacos-nacos',
         },
         component: IFrame,
