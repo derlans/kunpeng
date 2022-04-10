@@ -16,13 +16,12 @@ const routes: Array<RouteRecordRaw> = [
     children: [
       {
         path: 'docs',
-        name: 'frame-docs',
+        name: 'http://kunpeng.lhk.life/auth/doc.html#/home',
         meta: {
           title: '接口文档',
-          frameSrc: 'http://kunpeng.lhk.life/auth/doc.html#/home',
           permissions: 'frame-docs',
         },
-        component: IFrame,
+        component: Layout,
       },
       {
         path: 'Elastic',

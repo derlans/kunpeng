@@ -11,7 +11,6 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '项目文档',
       icon: renderIcon(DocumentTextOutline),
-      sort: 9,
     },
   },
 ];

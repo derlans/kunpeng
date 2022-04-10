@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '用户',
       icon: renderIcon(TeamOutlined),
-      sort: 99,
+      permissions: 'user',
     },
     children: [
       {
@@ -31,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'UserList',
         meta: {
           title: '用户管理',
+          permissions: 'user:list',
         },
         component: () => import('@/views/user/index.vue'),
       },
