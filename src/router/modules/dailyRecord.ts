@@ -20,7 +20,6 @@ const routes: Array<RouteRecordRaw> = [
     component: Layout,
     meta: {
       title: '日志管理',
-      sort: 2,
       permissions: 'dailyRecord',
     },
     children: [
