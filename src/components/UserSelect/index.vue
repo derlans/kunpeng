@@ -1,22 +1,25 @@
 <template>
-  <div class="relative">
-    <n-input
-      v-model:value="input"
-      @keyup.enter="updateInput"
-      class="absolute"
-      placeholder="输入用户名回车搜索用户"
-      @blur="isShowSelect = false"
-      @focus="isShowSelect = false"
-    />
-    <n-select
-      :options="options"
-      :reset-menu-on-options-change="false"
-      @scroll="handleScroll"
-      :show="isShowSelect"
-      class="absolute -z-1"
-      v-model:value="select"
-      :on-update:value="handelSelect"
-    />
+  <div class="flex justify-start items-center">
+    <div class="relative mr-3">
+      <n-input
+        v-model:value="input"
+        @keyup.enter="updateInput"
+        placeholder="输入用户名回车搜索用户"
+        @blur="isShowSelect = false"
+        @focus="isShowSelect = false"
+        style="width: 400px"
+      />
+      <n-select
+        :options="options"
+        :reset-menu-on-options-change="false"
+        @scroll="handleScroll"
+        :show="isShowSelect"
+        class="absolute -z-1 left-0 top-0"
+        v-model:value="select"
+        :on-update:value="handelSelect"
+      />
+    </div>
+    <n-button type="info" @click="updateInput">搜索</n-button>
   </div>
 </template>
 
@@ -57,6 +60,7 @@
     });
   }
   function handelSelect(v, option) {
+    isShowSelect.value = false;
     input.value = option.label;
     Emits('onSelect', v);
   }

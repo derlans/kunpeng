@@ -1,7 +1,17 @@
 <template>
   <n-card title="用户黑名单" style="min-height: 800px">
-    <div class="w-96 h-4 ml-5 text-lg">当前用户id：{{ currentUserid }}</div>
-    <UserSelect class="w-96 h-4 m-5" @on-select="updateCurrentUser" />
+    <div class="flex justify-start items-center h-10 mt-3 mb-5">
+      <UserSelect @on-select="updateCurrentUser" />
+      <n-input
+        class="h-8 ml-10 mr-3"
+        style="width: 400px"
+        placeholder="输入id搜索"
+        v-model:value="currentUserid"
+      />
+      <n-button type="success" @click="updateUser">搜索</n-button>
+    </div>
+    <div class="w-96 h-8 ml-5 text-lg">用户id：{{ currentUserid }}</div>
+    <n-empty description="请先选择用户" v-show="!currentUserid" size="huge" />
     <div class="flex justify-start flex-wrap" v-show="currentUserid">
       <n-divider>黑名单中的类型</n-divider>
       <div
