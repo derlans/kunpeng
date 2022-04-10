@@ -97,9 +97,10 @@ export const useAsyncRouteStore = defineStore({
         const { permissions } = meta || {};
         // return true;
         if (!permissions) return true;
-        const { icon, name } = userStore.getPermsAuthsMap[permissions] || {};
+        const { icon, name, orderId } = userStore.getPermsAuthsMap[permissions] || {};
         meta.icon = (icon && getViconsIcon(icon)) || meta.icon;
         meta.title = name || meta.title;
+        meta.orderId = orderId || meta.orderId;
         return authorities.includes(permissions);
       };
       const { getPermissionMode } = useProjectSetting();

@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'frame-docs',
         meta: {
           title: '接口文档',
-          frameSrc: 'http://124.70.101.198:8090/doc.html#/home',
+          frameSrc: 'http://kunpeng.lhk.life/auth/doc.html#/home',
           permissions: 'frame-docs',
         },
         component: IFrame,

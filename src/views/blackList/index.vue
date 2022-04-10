@@ -4,7 +4,6 @@
     :request="loadDataTable"
     :row-key="(row) => row.id"
     :actionColumn="actionColumn"
-    :scroll-x="1000"
     ref="actionRef"
   >
     <template #toolbar>
@@ -125,5 +124,6 @@
     await createBlackTypes(unref(form));
     window['$message'].success('创建成功');
     reloadTable();
+    showModal.value = false;
   }
 </script>

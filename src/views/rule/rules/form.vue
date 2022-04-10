@@ -61,7 +61,9 @@
   import { getRuleList, updateRule } from '@/api/rule';
   import { RuleFormMode, DEFAUTT_JAVA_CODE, RuleFormModeValues, rule } from './index';
   import codeEditor from '@/components/codeEditor/index.vue';
+  import { useRulesStore } from '@/store/modules/rules';
   const route = useRoute();
+  const rulesStore = useRulesStore();
   const message = useMessage();
   const javaCodeEditor = ref(null);
   const disabled = ref(false);
@@ -91,6 +93,7 @@
         async craeteNewRule() {
           await updateRule(form.value);
           message.success('创建成功');
+          await rulesStore.setRules();
         },
       },
     },

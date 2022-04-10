@@ -78,7 +78,7 @@
       v-model:show="showCreateRuleCollectionRule"
       :show-icon="false"
       preset="dialog"
-      title="新建规则"
+      :title="ruleModes[ruleMode]"
     >
       <n-form
         :model="ruleCollectionRuleForm"
@@ -88,14 +88,22 @@
         class="py-4"
       >
         <n-form-item label="规则名" path="ruleName">
-          <n-select :options="ruleNameOptions" v-model:value="ruleCollectionRuleForm.ruleName" />
+          <n-select
+            :options="ruleNameOptions"
+            v-model:value="ruleCollectionRuleForm.ruleName"
+            :disabled="ruleMode === 1"
+            style="width: 300px"
+          />
         </n-form-item>
         <n-form-item label="规则优先级" path="priority">
-          <n-slider v-model:value="ruleCollectionRuleForm.priority" :step="1" :max="100" :min="1" />
+          <n-input-number v-model:value="ruleCollectionRuleForm.priority" style="width: 300px" />
         </n-form-item>
 
         <n-form-item label="拦截记录" path="interceptDescription">
-          <n-input v-model:value="ruleCollectionRuleForm.interceptDescription" />
+          <n-input
+            v-model:value="ruleCollectionRuleForm.interceptDescription"
+            style="width: 300px"
+          />
         </n-form-item>
         <n-form-item label="是否拦截" path="intercept">
           <n-switch
@@ -116,7 +124,12 @@
       <template #action>
         <n-space>
           <n-button @click="() => (showCreateRuleCollectionRule = false)">取消</n-button>
-          <n-button type="info" @click="handelCreateRuleCollectionRule">确定</n-button>
+          <n-button type="info" @click="handelCreateRuleCollectionRule" v-show="ruleMode === 0"
+            >确定</n-button
+          >
+          <n-button type="info" @click="handelUpdateRuleCollectionRule" v-show="ruleMode === 1"
+            >确定</n-button
+          >
         </n-space>
       </template>
     </n-modal>
@@ -126,10 +139,10 @@
 <script lang="ts" setup>
   import { h, reactive, ref, computed } from 'vue';
   import { debounce } from '@/utils/lodashChunk';
-  import { NDataTable, NSwitch, NSpace, NButton, NInputNumber } from 'naive-ui';
+  import { NDataTable, NSwitch, NSpace, NButton } from 'naive-ui';
   import { BasicTable, TableAction } from '@/components/Table';
   import { BasicForm, useForm } from '@/components/Form/index';
-  import { columns as ruleColumns } from '../rules/columns';
+  import { ruleColumns } from './index';
   import { useForm as myuseForm } from '@/hooks/form/useForm';
   import { useRulesStore } from '@/store/modules/rules';
   import {
@@ -149,20 +162,6 @@
     {
       title: '优先级',
       key: 'priority',
-      render(row) {
-        return h(NInputNumber, {
-          style: {
-            width: '100px',
-          },
-          value: row.priority,
-          'onUpdate:value': debounce((v) => {
-            updateRuleCollectionRule({ ...row, priority: v }).then(() => {
-              $message.success('更新成功');
-              row.priority = v;
-            });
-          }, 500),
-        });
-      },
     },
     {
       title: '是否开启',
@@ -214,6 +213,18 @@
               }, 500),
             },
             '删除'
+          ),
+          h(
+            NButton,
+            {
+              type: 'success',
+              onClick: debounce(() => {
+                ruleMode.value = 1;
+                Object.assign(ruleCollectionRuleForm, row);
+                showCreateRuleCollectionRule.value = true;
+              }, 500),
+            },
+            '更新'
           ),
         ]);
       },
@@ -274,7 +285,17 @@
       reloadTable();
     });
   }
+
   // 给规则集添加规则
+  const ruleModes = {
+    0: {
+      title: '添加规则',
+    },
+    1: {
+      title: '更新规则',
+    },
+  };
+  const ruleMode = ref(0);
   const rulesStore = useRulesStore();
   if (rulesStore.rules.length === 0) {
     rulesStore.setRules();
@@ -319,6 +340,13 @@
     createRuleCollectionRule({ ...ruleCollectionRuleForm }).then(() => {
       showCreateRuleCollectionRule.value = false;
       $message.success('创建成功');
+      reloadTable();
+    });
+  }
+  function handelUpdateRuleCollectionRule() {
+    updateRuleCollectionRule(ruleCollectionRuleForm).then(() => {
+      showCreateRuleCollectionRule.value = false;
+      $message.success('更新成功');
       reloadTable();
     });
   }

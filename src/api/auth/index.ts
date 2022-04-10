@@ -4,24 +4,36 @@ import { http } from '@/utils/http/axios/index';
  * @description 获取权限树
  */
 export function getAllAuthTree() {
-  return http.request({
-    method: 'GET',
-    url: '/auth/sysauth/list/all',
-  });
+  return http.request(
+    {
+      method: 'GET',
+      url: '/auth/sysauth/list/all',
+    },
+    {
+      isShowMessage: false,
+      isShowErrorMessage: false,
+    }
+  );
 }
 
 /**
  * @description 获取自己的权限
  */
 export function getAuths() {
-  return http.request({
-    method: 'GET',
-    url: '/auth/menu/nav',
-  });
+  return http.request(
+    {
+      method: 'GET',
+      url: '/auth/menu/nav',
+    },
+    {
+      isShowMessage: false,
+      isShowErrorMessage: false,
+    }
+  );
 }
 
 /**
- * @description 获取自己的权限
+ * @description 创建权限
  */
 export function createAuth(authNode) {
   return http.request({

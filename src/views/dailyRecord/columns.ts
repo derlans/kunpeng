@@ -29,7 +29,7 @@ export const columns: dailyRecordColumn[] = [
     align: 'center',
     key: 'sourceAsMap[date]',
     render(row) {
-      return renderDateTime(row.sourceAsMap.date);
+      return renderDateTime(new Date(row.sourceAsMap.date).getTime() + 8 * 60 * 60 * 1000);
     },
   },
   {

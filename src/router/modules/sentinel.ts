@@ -19,7 +19,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'frame-sentinel',
         meta: {
           title: '流控中心',
-          frameSrc: 'http://lhk.life/sentinel/',
+          frameSrc: 'http://kunpeng.lhk.life/sentinel/',
           permissions: 'sentinel-sentinel',
         },
         component: IFrame,

@@ -1,4 +1,5 @@
 import { SelectOption } from '@/components/Form/index';
+import { renderDateTime } from '@/render/date';
 export const actionOpations: SelectOption[] = [
   {
     label: '是',
@@ -26,25 +27,35 @@ export interface rule {
   code: string;
   off: number;
 }
-// interface InternalRowData {
-//   // [key: string]: unknown;
-//   key: unknown;
-// }
-// interface Foo {
-//   a: string;
-//   render?: (rowDate: InternalRowData) => string;
-// }
-// type Bar = {
-//   [P in keyof Foo]?: Foo[P];
-//   a:number
-// };
-// interface row {
-//   a: string;
-// }
-// const bar: Bar = {
-//   id: 1,
-//   render: () => {
-//     return '1';
-//   },
-// };
-// console.log(bar);
+export const ruleColumns = [
+  {
+    title: 'id',
+    key: 'id',
+  },
+  {
+    title: '规则名',
+    key: 'ruleName',
+  },
+  {
+    title: '描述',
+    key: 'interceptDescription',
+  },
+  {
+    title: '创建时间',
+    key: 'createTime',
+    render(row) {
+      return renderDateTime(new Date(row.createTime).getTime() + 1000 * 60 * 60 * 8);
+    },
+  },
+  {
+    title: '更新时间',
+    key: 'updateTime',
+    render(row) {
+      return renderDateTime(new Date(row.updateTime).getTime() + 1000 * 60 * 60 * 8);
+    },
+  },
+  {
+    title: '操作人',
+    key: 'operator',
+  },
+];

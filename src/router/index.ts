@@ -15,7 +15,7 @@ Object.keys(modules).forEach((key) => {
 });
 
 function sortRoute(a, b) {
-  return (a.meta?.sort || 0) - (b.meta?.sort || 0);
+  return (a.meta?.orderId || 0) - (b.meta?.orderId || 0);
 }
 
 routeModuleList.sort(sortRoute);
