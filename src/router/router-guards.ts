@@ -67,7 +67,6 @@ export function createRouterGuards(router: Router) {
     const routes = await asyncRouteStore.generateRoutes({ authorities });
     routes.sort((a, b) => a.meta.orderId - b.meta.orderId);
     // 动态添加可访问路由表
-    console.log('routes', routes);
     routes.forEach((item) => {
       router.addRoute(item as unknown as RouteRecordRaw);
     });
