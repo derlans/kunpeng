@@ -75,20 +75,11 @@
   });
 
   const loadDataTable = async ({ page, size }) => {
-    const list: any[] = await getRuleList();
-    const totalCount = list.length;
-    if (totalCount) {
-      return {
-        list: list.slice(size * (page - 1), size * page),
-        page,
-        pageCount: Math.ceil(totalCount / size),
-        size,
-      };
-    }
+    const { rules: list, total } = await getRuleList({ page, size });
     return {
-      list: [],
-      page: 1,
-      pageCount: 1,
+      list,
+      page: page,
+      pageCount: Math.ceil(total / size),
     };
   };
 
