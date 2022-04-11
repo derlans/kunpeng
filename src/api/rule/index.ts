@@ -1,14 +1,21 @@
 import { http } from '@/utils/http/axios';
 import { rule } from '@/views/rule/rules/index';
 //获取规则列表
-export function getRuleList({ page, size }) {
+export function getRuleList({ page, size, queryRuleName }) {
   return http.request<{ rules: rule[]; total: number }>({
     url: '/kunpeng/rule/list',
     method: 'GET',
     params: {
       page,
       size,
+      queryRuleName,
     },
+  });
+}
+export function getAllRule() {
+  return http.request<rule[]>({
+    url: '/kunpeng/rule/list/all',
+    method: 'GET',
   });
 }
 // 删除规则

@@ -1,5 +1,10 @@
 <template>
   <n-card :bordered="false" class="proCard">
+    <BasicForm @register="register" @submit="handleSubmit">
+      <template #statusSlot="{ model, field }">
+        <n-input v-model:value="model[field]" />
+      </template>
+    </BasicForm>
     <BasicTable
       :columns="columns"
       :request="loadDataTable"
@@ -36,6 +41,7 @@
   import { columns } from './columns';
   import { useRouter } from 'vue-router';
   import { RuleFormMode } from './index';
+  import { useForm } from '@/components/Form';
   const router = useRouter();
   const message = useMessage();
   const actionRef = ref();
@@ -75,7 +81,11 @@
   });
 
   const loadDataTable = async ({ page, size }) => {
-    const { rules: list, total } = await getRuleList({ page, size });
+    const { rules: list, total } = await getRuleList({
+      page,
+      size,
+      queryRuleName: formMethods.getFieldsValue().ruleName as string,
+    });
     return {
       list,
       page: page,
@@ -90,7 +100,20 @@
   function reloadTable() {
     actionRef.value.reload();
   }
-
+  const [register, formMethods] = useForm({
+    gridProps: { cols: '1 s:1 m:2 l:3 xl:4 2xl:4' },
+    labelWidth: 80,
+    schemas: [
+      {
+        field: 'ruleName',
+        component: 'NInput',
+        label: '规则名',
+      },
+    ] as any[],
+  });
+  function handleSubmit() {
+    reloadTable();
+  }
   async function handleDelete(record: Recordable) {
     await deleteRule(record.id);
     message.info('已删除');

@@ -58,7 +58,7 @@
   import { ref, computed } from 'vue';
   import { useMessage } from 'naive-ui';
   import { useRoute } from 'vue-router';
-  import { getRuleList, updateRule } from '@/api/rule';
+  import { getAllRule, updateRule } from '@/api/rule';
   import { RuleFormMode, DEFAUTT_JAVA_CODE, RuleFormModeValues, rule } from './index';
   import codeEditor from '@/components/codeEditor/index.vue';
   import { useRulesStore } from '@/store/modules/rules';
@@ -106,7 +106,7 @@
           message.error('没有找到该规则');
           return;
         }
-        const rules = await getRuleList();
+        const rules = await getAllRule();
         const currentRule = rules.find((rule) => rule.id === id);
         if (currentRule) {
           currentRule.createTime = new Date(currentRule.createTime).getTime();
