@@ -297,9 +297,7 @@
   };
   const ruleMode = ref(0);
   const rulesStore = useRulesStore();
-  if (rulesStore.rules.length === 0) {
-    rulesStore.setRules();
-  }
+  rulesStore.setRules();
   const ruleNameOptions = computed(() => {
     return rulesStore.rules.map((rule) => ({
       value: rule['ruleName'],

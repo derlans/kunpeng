@@ -137,6 +137,7 @@
   }
   // 表单
   const authStore = useAuthStore();
+  authStore.setAuth();
   const allAuthNodeTree = authStore.getAllAuthNodeTree;
   const showModal = ref(false);
   const [form, formMethods] = useForm({

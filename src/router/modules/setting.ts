@@ -22,7 +22,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '个人信息',
       icon: getViconsIcon('DashboardOutlined'),
-      sort: 5,
+      permissions: 'setting',
     },
     children: [
       {
@@ -30,6 +30,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'setting-account',
         meta: {
           title: '个人设置',
+          permissions: 'setting:user',
         },
         component: () => import('@/views/setting/account/account.vue'),
       },

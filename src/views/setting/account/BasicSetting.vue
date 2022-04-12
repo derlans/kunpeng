@@ -59,6 +59,7 @@
     v-show="show"
     @close="show = false"
     @success="handleSuccess"
+    :key="userStore.avatar"
   />
 </template>
 

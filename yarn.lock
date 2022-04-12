@@ -6703,10 +6703,10 @@ vooks@^0.2.12, vooks@^0.2.4:
   dependencies:
     evtd "^0.2.2"
 
-vue-avatar-upload@^1.0.6:
-  version "1.0.6"
-  resolved "https://registry.yarnpkg.com/vue-avatar-upload/-/vue-avatar-upload-1.0.6.tgz#35117acf7f5776f8b520dbbd2678ceb5df707adf"
-  integrity sha512-PzmSDl6ah95EwM4UJ5R5ko+IhgWbFPaYaNA7jlzmkAaPCIwmtVGTQJueJ1xbEgUTG9eOfkkgirXay7MW0C+9VA==
+vue-avatar-upload@^1.0.7:
+  version "1.0.7"
+  resolved "https://registry.yarnpkg.com/vue-avatar-upload/-/vue-avatar-upload-1.0.7.tgz#6dde4c9faff65a61aad3ae35f80be17d5aceb8e4"
+  integrity sha512-b/kBhCdJ4+dyVjSrdETO6wMfO1tA9K3Vt9pSBJW8PF657JRKogHBtxqiy1YOpk1mj4h5lXl+6oVx2xcL4siE7A==
 
 vue-demi@*:
   version "0.12.1"

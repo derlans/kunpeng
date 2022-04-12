@@ -23,7 +23,7 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       title: '菜单管理',
       icon: renderIcon(HddFilled),
-      sort: 99,
+      permissions: 'menu',
     },
     children: [
       {
@@ -31,6 +31,7 @@ const routes: Array<RouteRecordRaw> = [
         name: 'MenuList',
         meta: {
           title: '菜单配置',
+          permissions: 'menu-setting',
         },
         component: () => import('@/views/menu/index.vue'),
       },
