@@ -44,7 +44,7 @@
     "qs": "^6.10.3",
     "vfonts": "^0.1.0",
     "vue": "^3.2.31",
-    "vue-avatar-upload": "^1.0.7",
+    "vue-avatar-upload": "^1.0.9",
     "vue-router": "^4.0.12",
     "vue-types": "^4.1.1",
     "vuedraggable": "^4.1.0"

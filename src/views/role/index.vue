@@ -165,6 +165,7 @@
   async function updateRole() {
     await roleStore.updateRole(form);
     $message.success('更新成功');
+    showModal.value = false;
   }
   function handleUpdateValue(v: string[]) {
     const parents = searchParentNodes(authStore.allAuthNodeTree, v, 'id').map((auth) => auth.id);

@@ -3,10 +3,9 @@
     <div class="view-account-header"></div>
     <div class="view-account-container">
       <div class="view-account-top">
-        <div class="view-account-top-logo">
-          <img src="~@/assets/images/account-logo.png" alt="" />
+        <div class="flex justify-center">
+          <img src="~@/assets/images/logo.png" alt="" class="h-36" />
         </div>
-        <div class="view-account-top-desc">鲲鹏风控规则引擎</div>
       </div>
       <div class="view-account-form">
         <n-form
@@ -57,7 +56,7 @@
                 <span>其它登录方式</span>
               </div>
               <div class="flex-initial mx-2">
-                <a href="javascript:">
+                <a @click="showTips">
                   <n-icon size="24" color="#2d8cf0">
                     <LogoGithub />
                   </n-icon>
@@ -144,6 +143,9 @@
       }
     });
   };
+  function showTips() {
+    message.info('暂未开放,可自行对接第三方账号');
+  }
 </script>
 
 <style lang="less" scoped>

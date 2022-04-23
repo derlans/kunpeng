@@ -47,7 +47,9 @@ export function createColumns(): DataTableColumns<User> {
       title: '角色',
       align: 'center',
       render(rowData) {
-        return renderArray(rowData.sysRoles.map((role) => role.rolename));
+        return rowData.sysRoles.length
+          ? renderArray(rowData.sysRoles.map((role) => role.rolename))
+          : h('span', null, '普通用户');
       },
     },
     {

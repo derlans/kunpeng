@@ -3,10 +3,9 @@
     <div class="view-account-header"></div>
     <div class="view-account-container">
       <div class="view-account-top">
-        <div class="view-account-top-logo">
-          <img src="~@/assets/images/account-logo.png" alt="" />
+        <div class="flex justify-center">
+          <img src="~@/assets/images/logo.png" alt="" class="h-36" />
         </div>
-        <div class="view-account-top-desc">鲲鹏风控平台 注册</div>
       </div>
       <div class="view-account-form">
         <n-form ref="formRef" size="large" :model="formInline" :rules="rules">
@@ -56,21 +55,25 @@
               </template>
             </n-input>
           </n-form-item>
-          <!-- <n-form-item path="city" label="城市">
-            <n-input v-model:value="formInline.city" type="city" placeholder="请输入城市">
-              <template #prefix>
-                <n-icon size="18" color="#808695">
-                  <LockClosedOutline />
-                </n-icon>
-              </template>
-            </n-input>
-          </n-form-item> -->
           <n-form-item>
             <n-button type="primary" @click="handleSubmit" size="large" :loading="loading" block>
               注册
             </n-button>
           </n-form-item>
           <n-form-item class="default-color">
+            <div class="flex view-account-other">
+              <div class="flex-initial">
+                <span>使用第三方平台注册</span>
+              </div>
+              <div class="flex-initial mx-2">
+                <a @click="showTips">
+                  <n-icon size="24" color="#2d8cf0">
+                    <LogoGithub />
+                  </n-icon>
+                </a>
+              </div>
+            </div>
+
             <div class="flex view-account-other">
               <div class="flex-initial" style="margin-left: auto">
                 <a @click.prevent="router.push('/login')">登录</a>
@@ -88,6 +91,7 @@
   import { useRouter } from 'vue-router';
   import { useMessage } from 'naive-ui';
   import { register } from '@/api/system/user';
+  import { PersonOutline, LockClosedOutline, LogoGithub } from '@vicons/ionicons5';
   interface FormState {
     username: string;
     password: string;
@@ -133,6 +137,7 @@
         try {
           await register(params);
           router.replace({ path: '/login' });
+          message.success('注册成功');
         } catch {
           message.warning('用户名或者邮箱已存在');
         } finally {
@@ -143,6 +148,9 @@
       }
     });
   };
+  function showTips() {
+    message.info('暂未开放,可自行对接第三方账号');
+  }
 </script>
 
 <style lang="less" scoped>
@@ -154,7 +162,7 @@
 
     &-container {
       flex: 1;
-      padding: 32px 0;
+      padding: 20px 0;
       width: 384px;
       margin: 0 auto;
     }
@@ -192,6 +200,11 @@
 
     .page-account-container {
       padding: 32px 0 24px 0;
+    }
+  }
+  :deep {
+    .n-form-item-feedback-wrapper {
+      --n-feedback-height: 8px;
     }
   }
 </style>

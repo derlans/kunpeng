@@ -103,5 +103,6 @@
   let currentUser = ref({} as User);
   function handelUpdateUserRole(v) {
     currentUser.value.sysRoles = v;
+    showSetRole.value = false;
   }
 </script>

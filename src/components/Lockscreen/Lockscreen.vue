@@ -143,12 +143,15 @@
           ...state.loginParams,
         };
         state.loginLoading = true;
-        const { code, message } = await userStore.login(params);
+        const { code, msg } = await userStore.login({
+          passward: params.password,
+          username: userStore.username,
+        });
         if (code === ResultEnum.SUCCESS) {
           onLockLogin(false);
           useLockscreen.setLock(false);
         } else {
-          state.errorMsg = message;
+          state.errorMsg = msg;
           state.isLoginError = true;
         }
         state.loginLoading = false;

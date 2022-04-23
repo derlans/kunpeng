@@ -53,7 +53,6 @@
     :url="UPLOAD_AVATAR_URL"
     :headers="headers"
     :fixed="true"
-    style="z-index: 9999"
     :avatar="userStore.avatar"
     @error="handleError"
     v-show="show"

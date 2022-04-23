@@ -21,6 +21,7 @@
   import { User } from './index';
   import { ref } from 'vue';
   const roleStore = useRoleStore();
+  roleStore.setRoles();
   const Props = defineProps<{
     user: User;
   }>();
