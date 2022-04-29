@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getRoles, deleteRole, updateRole, authRole } from '@/api/role/index';
+import { getRoles, deleteRole, updateRole, authRole, createRole } from '@/api/role/index';
 import { Role } from '@/views/role/index';
 import { isArrayEquel, isObjectEquel, setValues } from '@/utils';
 interface roleState {
@@ -30,9 +30,9 @@ export const useRoleStore = defineStore({
   },
   actions: {
     async setRoles() {
-      const rulus = await getRoles();
+      const roles = await getRoles();
       this.roles.length = 0;
-      this.roles.push(...rulus);
+      this.roles.push(...roles);
     },
     async deleteRole(id) {
       await deleteRole(id);
@@ -57,6 +57,10 @@ export const useRoleStore = defineStore({
           storeRole.authIds = [...role.authIds];
         }
       }
+    },
+    async createRole(role: Role) {
+      await createRole(role);
+      await this.setRoles();
     },
   },
 });

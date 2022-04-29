@@ -16,7 +16,8 @@ export function getRoles() {
 export function deleteRole(id) {
   return http.request({
     method: 'DELETE',
-    url: `/auth/sys/role/auth/remove/${id}`,
+    url: `/auth/sys/role/auth/remove/`,
+    data: [id],
   });
 }
 
@@ -31,6 +32,16 @@ export function updateRole(role: Role) {
   });
 }
 
+/**
+ * @description 创建角色
+ */
+export function createRole(role: Role) {
+  return http.request({
+    method: 'POST',
+    url: `/auth/sys/role/auth/role/create/`,
+    data: role,
+  });
+}
 /**
  * @description 更新角色
  */

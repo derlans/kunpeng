@@ -144,8 +144,8 @@
         };
         state.loginLoading = true;
         const { code, msg } = await userStore.login({
-          passward: params.password,
           username: userStore.username,
+          password: params.password,
         });
         if (code === ResultEnum.SUCCESS) {
           onLockLogin(false);

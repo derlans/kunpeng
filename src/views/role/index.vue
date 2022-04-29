@@ -14,6 +14,7 @@
         @click="
           () => {
             currentMode = modes[0];
+            formMethods.resetFieldsValues();
             showModal = true;
           }
         "
@@ -35,6 +36,9 @@
       </n-form-item>
       <n-form-item label="标识符" path="code">
         <n-input v-model:value="form.code" />
+      </n-form-item>
+      <n-form-item label="描述" path="description">
+        <n-input v-model:value="form.description" />
       </n-form-item>
       <n-form-item label="授权" path="authIds">
         <n-tree-select
@@ -161,7 +165,16 @@
     ],
   });
   const formRules = [];
-  function createRole() {}
+  async function createRole() {
+    await roleStore.createRole({
+      rolename: form.rolename,
+      code: form.code,
+      description: form.description,
+      authIds: form.authIds,
+    } as any);
+    $message.success('更新成功');
+    showModal.value = false;
+  }
   async function updateRole() {
     await roleStore.updateRole(form);
     $message.success('更新成功');
