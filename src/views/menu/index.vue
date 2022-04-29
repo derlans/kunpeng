@@ -15,7 +15,7 @@
     <n-data-table :columns="columns" :data="data" :row-key="rowKey" />
   </n-card>
   <n-modal v-model:show="showModel" :show-icon="false" preset="dialog" title="权限节点">
-    <EditAuth v-model="form" :mode="formMode" />
+    <EditAuth @close="showModel = false" v-model="form" :mode="formMode" />
   </n-modal>
 </template>
 

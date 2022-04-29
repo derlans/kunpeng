@@ -74,6 +74,9 @@
     modelValue: AuthNode;
     mode: number;
   }>();
+  const Emits = defineEmits<{
+    (e: 'close'): void;
+  }>();
   const form = reactive(Props.modelValue);
   function handleUpdateValue(v) {
     form.parentId = v;
@@ -106,7 +109,7 @@
   watch(
     () => form.type,
     (v) => {
-      if (v === 0) form.parentId = -1;
+      if (v === 0) form.parentId = '-1';
     },
     {
       immediate: true,
@@ -117,6 +120,7 @@
       .createAuth({ ...form })
       .then(() => {
         window['$message'].success('成功');
+        Emits('close');
       })
       .catch(() => window['$message'].error('失败'));
   }
@@ -125,6 +129,7 @@
       .updateAuth({ ...form })
       .then(() => {
         window['$message'].success('成功');
+        Emits('close');
       })
       .catch(() => window['$message'].error('失败'));
   }
